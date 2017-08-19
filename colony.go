@@ -14,14 +14,14 @@ type ValueTypeColony struct {
 	entry *colonyGroupValueType
 }
 
-// NewValueTypeColony returns a new colony of ValueValueType's.
-func NewValueTypeColony() *ValueTypeColony {
+// NewValueTypeColony returns a new colony of ValueType's.
+func NewValueTypeColony(size uint) *ValueTypeColony {
 	return &ValueTypeColony{
-		entry: newValueTypeGroup(nil),
+		entry: newValueTypeGroup(nil, size),
 	}
 }
 
-// Iterate sends pointers to all instances of ValueValueType in the colony to the given channel.
+// Iterate sends pointers to all instances of ValueType in the colony to the given channel.
 func (c *ValueTypeColony) Iterate() <-chan *ValueType {
 	ch := make(chan *ValueType)
 	var wg sync.WaitGroup
@@ -51,17 +51,18 @@ func (c *ValueTypeColony) Delete(tp *ValueType) {
 	c.entry.Delete(tp)
 }
 
-func newValueTypeGroup(previous *colonyGroupValueType) *colonyGroupValueType {
+func newValueTypeGroup(previous *colonyGroupValueType, size uint) *colonyGroupValueType {
 	var g colonyGroupValueType
-	if previous != nil {
-		g.data = make([]ValueType, len(previous.data)*2)
-		g.index = bitset.New(uint(len(previous.data) * 2))
+	if size > 0 {
+		g.data = make([]ValueType, size)
+		g.index = bitset.New(size)
 	} else {
 		g.data = make([]ValueType, 8)
 		g.index = bitset.New(8)
 	}
 	g.next = nil
 	g.l = &sync.RWMutex{}
+	g.previous = previous
 	g.minPtr = uintptr(unsafe.Pointer(&g.data[0]))
 	g.maxPtr = uintptr(unsafe.Pointer(&g.data[len(g.data)-1]))
 	return &g
@@ -88,7 +89,7 @@ func (g *colonyGroupValueType) Insert(t *ValueType) (tp *ValueType) {
 		return
 	}
 	if g.next == nil {
-		g.next = newValueTypeGroup(g)
+		g.next = newValueTypeGroup(g, uint(len(g.data) * 2))
 	}
 	g.l.Unlock()
 	return g.next.Insert(t)

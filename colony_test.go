@@ -4,7 +4,7 @@ package colony
 import "testing"
 
 func TestValueTypeColony(t *testing.T) {
-	colony := NewValueTypeColony()
+	colony := NewValueTypeColony(1)
 	t.Run("Insert", func(t *testing.T) {
 		newT := new(ValueType)
 		tp := colony.Insert(newT)
@@ -25,7 +25,7 @@ func TestValueTypeColony(t *testing.T) {
 
 var ValueTypeBenchmarks = []struct {
 	name  string
-	count int
+	count uint
 }{
 	{"1", 1},
 	{"10", 10},
@@ -38,17 +38,17 @@ var ValueTypeBenchmarks = []struct {
 
 func BenchmarkValueTypeColony_Insert(b *testing.B) {
 	for _, bm := range ValueTypeBenchmarks {
-		b.Run(bm.name, func(count int) func(*testing.B) {
+		b.Run(bm.name, func(count uint) func(*testing.B) {
 			return func(b *testing.B) {
 				// setup
-				colony := NewValueTypeColony()
+				colony := NewValueTypeColony(count)
 				newValueType := new(ValueType)
 
 				b.ReportAllocs()
 				b.ResetTimer()
 
 				for i := 0; i < b.N; i++ {
-					for j := 0; j < count; j++ {
+					for j := 0; uint(j) < count; j++ {
 						newValueType = colony.Insert(newValueType)
 					}
 				}
@@ -59,17 +59,17 @@ func BenchmarkValueTypeColony_Insert(b *testing.B) {
 
 func BenchmarkValueTypeSlice(b *testing.B) {
 	for _, bm := range ValueTypeBenchmarks {
-		b.Run(bm.name, func(count int) func(*testing.B) {
+		b.Run(bm.name, func(count uint) func(*testing.B) {
 			return func(b *testing.B) {
 				// setup
-				var arr []ValueType
+				 arr := make([]ValueType, count)
 				newValueType := new(ValueType)
 
 				b.ReportAllocs()
 				b.ResetTimer()
 
 				for i := 0; i < b.N; i++ {
-					for j := 0; j < count; j++ {
+					for j := 0; uint(j) < count; j++ {
 						arr = append(arr, *newValueType)
 					}
 				}

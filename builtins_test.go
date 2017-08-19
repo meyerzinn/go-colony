@@ -7,7 +7,7 @@ package colony
 import "testing"
 
 func TestBoolColony(t *testing.T) {
-	colony := NewBoolColony()
+	colony := NewBoolColony(1)
 	t.Run("Insert", func(t *testing.T) {
 		newT := new(bool)
 		tp := colony.Insert(newT)
@@ -28,7 +28,7 @@ func TestBoolColony(t *testing.T) {
 
 var BoolBenchmarks = []struct {
 	name  string
-	count int
+	count uint
 }{
 	{"1", 1},
 	{"10", 10},
@@ -41,17 +41,17 @@ var BoolBenchmarks = []struct {
 
 func BenchmarkBoolColony_Insert(b *testing.B) {
 	for _, bm := range BoolBenchmarks {
-		b.Run(bm.name, func(count int) func(*testing.B) {
+		b.Run(bm.name, func(count uint) func(*testing.B) {
 			return func(b *testing.B) {
 				// setup
-				colony := NewBoolColony()
+				colony := NewBoolColony(count)
 				newbool := new(bool)
 
 				b.ReportAllocs()
 				b.ResetTimer()
 
 				for i := 0; i < b.N; i++ {
-					for j := 0; j < count; j++ {
+					for j := 0; uint(j) < count; j++ {
 						newbool = colony.Insert(newbool)
 					}
 				}
@@ -62,17 +62,17 @@ func BenchmarkBoolColony_Insert(b *testing.B) {
 
 func BenchmarkBoolSlice(b *testing.B) {
 	for _, bm := range BoolBenchmarks {
-		b.Run(bm.name, func(count int) func(*testing.B) {
+		b.Run(bm.name, func(count uint) func(*testing.B) {
 			return func(b *testing.B) {
 				// setup
-				var arr []bool
+				arr := make([]bool, count)
 				newbool := new(bool)
 
 				b.ReportAllocs()
 				b.ResetTimer()
 
 				for i := 0; i < b.N; i++ {
-					for j := 0; j < count; j++ {
+					for j := 0; uint(j) < count; j++ {
 						arr = append(arr, *newbool)
 					}
 				}
@@ -82,7 +82,7 @@ func BenchmarkBoolSlice(b *testing.B) {
 }
 
 func TestByteColony(t *testing.T) {
-	colony := NewByteColony()
+	colony := NewByteColony(1)
 	t.Run("Insert", func(t *testing.T) {
 		newT := new(byte)
 		tp := colony.Insert(newT)
@@ -103,7 +103,7 @@ func TestByteColony(t *testing.T) {
 
 var ByteBenchmarks = []struct {
 	name  string
-	count int
+	count uint
 }{
 	{"1", 1},
 	{"10", 10},
@@ -116,17 +116,17 @@ var ByteBenchmarks = []struct {
 
 func BenchmarkByteColony_Insert(b *testing.B) {
 	for _, bm := range ByteBenchmarks {
-		b.Run(bm.name, func(count int) func(*testing.B) {
+		b.Run(bm.name, func(count uint) func(*testing.B) {
 			return func(b *testing.B) {
 				// setup
-				colony := NewByteColony()
+				colony := NewByteColony(count)
 				newbyte := new(byte)
 
 				b.ReportAllocs()
 				b.ResetTimer()
 
 				for i := 0; i < b.N; i++ {
-					for j := 0; j < count; j++ {
+					for j := 0; uint(j) < count; j++ {
 						newbyte = colony.Insert(newbyte)
 					}
 				}
@@ -137,17 +137,17 @@ func BenchmarkByteColony_Insert(b *testing.B) {
 
 func BenchmarkByteSlice(b *testing.B) {
 	for _, bm := range ByteBenchmarks {
-		b.Run(bm.name, func(count int) func(*testing.B) {
+		b.Run(bm.name, func(count uint) func(*testing.B) {
 			return func(b *testing.B) {
 				// setup
-				var arr []byte
+				arr := make([]byte, count)
 				newbyte := new(byte)
 
 				b.ReportAllocs()
 				b.ResetTimer()
 
 				for i := 0; i < b.N; i++ {
-					for j := 0; j < count; j++ {
+					for j := 0; uint(j) < count; j++ {
 						arr = append(arr, *newbyte)
 					}
 				}
@@ -157,7 +157,7 @@ func BenchmarkByteSlice(b *testing.B) {
 }
 
 func TestComplex128Colony(t *testing.T) {
-	colony := NewComplex128Colony()
+	colony := NewComplex128Colony(1)
 	t.Run("Insert", func(t *testing.T) {
 		newT := new(complex128)
 		tp := colony.Insert(newT)
@@ -178,7 +178,7 @@ func TestComplex128Colony(t *testing.T) {
 
 var Complex128Benchmarks = []struct {
 	name  string
-	count int
+	count uint
 }{
 	{"1", 1},
 	{"10", 10},
@@ -191,17 +191,17 @@ var Complex128Benchmarks = []struct {
 
 func BenchmarkComplex128Colony_Insert(b *testing.B) {
 	for _, bm := range Complex128Benchmarks {
-		b.Run(bm.name, func(count int) func(*testing.B) {
+		b.Run(bm.name, func(count uint) func(*testing.B) {
 			return func(b *testing.B) {
 				// setup
-				colony := NewComplex128Colony()
+				colony := NewComplex128Colony(count)
 				newcomplex128 := new(complex128)
 
 				b.ReportAllocs()
 				b.ResetTimer()
 
 				for i := 0; i < b.N; i++ {
-					for j := 0; j < count; j++ {
+					for j := 0; uint(j) < count; j++ {
 						newcomplex128 = colony.Insert(newcomplex128)
 					}
 				}
@@ -212,17 +212,17 @@ func BenchmarkComplex128Colony_Insert(b *testing.B) {
 
 func BenchmarkComplex128Slice(b *testing.B) {
 	for _, bm := range Complex128Benchmarks {
-		b.Run(bm.name, func(count int) func(*testing.B) {
+		b.Run(bm.name, func(count uint) func(*testing.B) {
 			return func(b *testing.B) {
 				// setup
-				var arr []complex128
+				arr := make([]complex128, count)
 				newcomplex128 := new(complex128)
 
 				b.ReportAllocs()
 				b.ResetTimer()
 
 				for i := 0; i < b.N; i++ {
-					for j := 0; j < count; j++ {
+					for j := 0; uint(j) < count; j++ {
 						arr = append(arr, *newcomplex128)
 					}
 				}
@@ -232,7 +232,7 @@ func BenchmarkComplex128Slice(b *testing.B) {
 }
 
 func TestComplex64Colony(t *testing.T) {
-	colony := NewComplex64Colony()
+	colony := NewComplex64Colony(1)
 	t.Run("Insert", func(t *testing.T) {
 		newT := new(complex64)
 		tp := colony.Insert(newT)
@@ -253,7 +253,7 @@ func TestComplex64Colony(t *testing.T) {
 
 var Complex64Benchmarks = []struct {
 	name  string
-	count int
+	count uint
 }{
 	{"1", 1},
 	{"10", 10},
@@ -266,17 +266,17 @@ var Complex64Benchmarks = []struct {
 
 func BenchmarkComplex64Colony_Insert(b *testing.B) {
 	for _, bm := range Complex64Benchmarks {
-		b.Run(bm.name, func(count int) func(*testing.B) {
+		b.Run(bm.name, func(count uint) func(*testing.B) {
 			return func(b *testing.B) {
 				// setup
-				colony := NewComplex64Colony()
+				colony := NewComplex64Colony(count)
 				newcomplex64 := new(complex64)
 
 				b.ReportAllocs()
 				b.ResetTimer()
 
 				for i := 0; i < b.N; i++ {
-					for j := 0; j < count; j++ {
+					for j := 0; uint(j) < count; j++ {
 						newcomplex64 = colony.Insert(newcomplex64)
 					}
 				}
@@ -287,17 +287,17 @@ func BenchmarkComplex64Colony_Insert(b *testing.B) {
 
 func BenchmarkComplex64Slice(b *testing.B) {
 	for _, bm := range Complex64Benchmarks {
-		b.Run(bm.name, func(count int) func(*testing.B) {
+		b.Run(bm.name, func(count uint) func(*testing.B) {
 			return func(b *testing.B) {
 				// setup
-				var arr []complex64
+				arr := make([]complex64, count)
 				newcomplex64 := new(complex64)
 
 				b.ReportAllocs()
 				b.ResetTimer()
 
 				for i := 0; i < b.N; i++ {
-					for j := 0; j < count; j++ {
+					for j := 0; uint(j) < count; j++ {
 						arr = append(arr, *newcomplex64)
 					}
 				}
@@ -307,7 +307,7 @@ func BenchmarkComplex64Slice(b *testing.B) {
 }
 
 func TestErrorColony(t *testing.T) {
-	colony := NewErrorColony()
+	colony := NewErrorColony(1)
 	t.Run("Insert", func(t *testing.T) {
 		newT := new(error)
 		tp := colony.Insert(newT)
@@ -328,7 +328,7 @@ func TestErrorColony(t *testing.T) {
 
 var ErrorBenchmarks = []struct {
 	name  string
-	count int
+	count uint
 }{
 	{"1", 1},
 	{"10", 10},
@@ -341,17 +341,17 @@ var ErrorBenchmarks = []struct {
 
 func BenchmarkErrorColony_Insert(b *testing.B) {
 	for _, bm := range ErrorBenchmarks {
-		b.Run(bm.name, func(count int) func(*testing.B) {
+		b.Run(bm.name, func(count uint) func(*testing.B) {
 			return func(b *testing.B) {
 				// setup
-				colony := NewErrorColony()
+				colony := NewErrorColony(count)
 				newerror := new(error)
 
 				b.ReportAllocs()
 				b.ResetTimer()
 
 				for i := 0; i < b.N; i++ {
-					for j := 0; j < count; j++ {
+					for j := 0; uint(j) < count; j++ {
 						newerror = colony.Insert(newerror)
 					}
 				}
@@ -362,17 +362,17 @@ func BenchmarkErrorColony_Insert(b *testing.B) {
 
 func BenchmarkErrorSlice(b *testing.B) {
 	for _, bm := range ErrorBenchmarks {
-		b.Run(bm.name, func(count int) func(*testing.B) {
+		b.Run(bm.name, func(count uint) func(*testing.B) {
 			return func(b *testing.B) {
 				// setup
-				var arr []error
+				arr := make([]error, count)
 				newerror := new(error)
 
 				b.ReportAllocs()
 				b.ResetTimer()
 
 				for i := 0; i < b.N; i++ {
-					for j := 0; j < count; j++ {
+					for j := 0; uint(j) < count; j++ {
 						arr = append(arr, *newerror)
 					}
 				}
@@ -382,7 +382,7 @@ func BenchmarkErrorSlice(b *testing.B) {
 }
 
 func TestFloat32Colony(t *testing.T) {
-	colony := NewFloat32Colony()
+	colony := NewFloat32Colony(1)
 	t.Run("Insert", func(t *testing.T) {
 		newT := new(float32)
 		tp := colony.Insert(newT)
@@ -403,7 +403,7 @@ func TestFloat32Colony(t *testing.T) {
 
 var Float32Benchmarks = []struct {
 	name  string
-	count int
+	count uint
 }{
 	{"1", 1},
 	{"10", 10},
@@ -416,17 +416,17 @@ var Float32Benchmarks = []struct {
 
 func BenchmarkFloat32Colony_Insert(b *testing.B) {
 	for _, bm := range Float32Benchmarks {
-		b.Run(bm.name, func(count int) func(*testing.B) {
+		b.Run(bm.name, func(count uint) func(*testing.B) {
 			return func(b *testing.B) {
 				// setup
-				colony := NewFloat32Colony()
+				colony := NewFloat32Colony(count)
 				newfloat32 := new(float32)
 
 				b.ReportAllocs()
 				b.ResetTimer()
 
 				for i := 0; i < b.N; i++ {
-					for j := 0; j < count; j++ {
+					for j := 0; uint(j) < count; j++ {
 						newfloat32 = colony.Insert(newfloat32)
 					}
 				}
@@ -437,17 +437,17 @@ func BenchmarkFloat32Colony_Insert(b *testing.B) {
 
 func BenchmarkFloat32Slice(b *testing.B) {
 	for _, bm := range Float32Benchmarks {
-		b.Run(bm.name, func(count int) func(*testing.B) {
+		b.Run(bm.name, func(count uint) func(*testing.B) {
 			return func(b *testing.B) {
 				// setup
-				var arr []float32
+				arr := make([]float32, count)
 				newfloat32 := new(float32)
 
 				b.ReportAllocs()
 				b.ResetTimer()
 
 				for i := 0; i < b.N; i++ {
-					for j := 0; j < count; j++ {
+					for j := 0; uint(j) < count; j++ {
 						arr = append(arr, *newfloat32)
 					}
 				}
@@ -457,7 +457,7 @@ func BenchmarkFloat32Slice(b *testing.B) {
 }
 
 func TestFloat64Colony(t *testing.T) {
-	colony := NewFloat64Colony()
+	colony := NewFloat64Colony(1)
 	t.Run("Insert", func(t *testing.T) {
 		newT := new(float64)
 		tp := colony.Insert(newT)
@@ -478,7 +478,7 @@ func TestFloat64Colony(t *testing.T) {
 
 var Float64Benchmarks = []struct {
 	name  string
-	count int
+	count uint
 }{
 	{"1", 1},
 	{"10", 10},
@@ -491,17 +491,17 @@ var Float64Benchmarks = []struct {
 
 func BenchmarkFloat64Colony_Insert(b *testing.B) {
 	for _, bm := range Float64Benchmarks {
-		b.Run(bm.name, func(count int) func(*testing.B) {
+		b.Run(bm.name, func(count uint) func(*testing.B) {
 			return func(b *testing.B) {
 				// setup
-				colony := NewFloat64Colony()
+				colony := NewFloat64Colony(count)
 				newfloat64 := new(float64)
 
 				b.ReportAllocs()
 				b.ResetTimer()
 
 				for i := 0; i < b.N; i++ {
-					for j := 0; j < count; j++ {
+					for j := 0; uint(j) < count; j++ {
 						newfloat64 = colony.Insert(newfloat64)
 					}
 				}
@@ -512,17 +512,17 @@ func BenchmarkFloat64Colony_Insert(b *testing.B) {
 
 func BenchmarkFloat64Slice(b *testing.B) {
 	for _, bm := range Float64Benchmarks {
-		b.Run(bm.name, func(count int) func(*testing.B) {
+		b.Run(bm.name, func(count uint) func(*testing.B) {
 			return func(b *testing.B) {
 				// setup
-				var arr []float64
+				arr := make([]float64, count)
 				newfloat64 := new(float64)
 
 				b.ReportAllocs()
 				b.ResetTimer()
 
 				for i := 0; i < b.N; i++ {
-					for j := 0; j < count; j++ {
+					for j := 0; uint(j) < count; j++ {
 						arr = append(arr, *newfloat64)
 					}
 				}
@@ -532,7 +532,7 @@ func BenchmarkFloat64Slice(b *testing.B) {
 }
 
 func TestIntColony(t *testing.T) {
-	colony := NewIntColony()
+	colony := NewIntColony(1)
 	t.Run("Insert", func(t *testing.T) {
 		newT := new(int)
 		tp := colony.Insert(newT)
@@ -553,7 +553,7 @@ func TestIntColony(t *testing.T) {
 
 var IntBenchmarks = []struct {
 	name  string
-	count int
+	count uint
 }{
 	{"1", 1},
 	{"10", 10},
@@ -566,17 +566,17 @@ var IntBenchmarks = []struct {
 
 func BenchmarkIntColony_Insert(b *testing.B) {
 	for _, bm := range IntBenchmarks {
-		b.Run(bm.name, func(count int) func(*testing.B) {
+		b.Run(bm.name, func(count uint) func(*testing.B) {
 			return func(b *testing.B) {
 				// setup
-				colony := NewIntColony()
+				colony := NewIntColony(count)
 				newint := new(int)
 
 				b.ReportAllocs()
 				b.ResetTimer()
 
 				for i := 0; i < b.N; i++ {
-					for j := 0; j < count; j++ {
+					for j := 0; uint(j) < count; j++ {
 						newint = colony.Insert(newint)
 					}
 				}
@@ -587,17 +587,17 @@ func BenchmarkIntColony_Insert(b *testing.B) {
 
 func BenchmarkIntSlice(b *testing.B) {
 	for _, bm := range IntBenchmarks {
-		b.Run(bm.name, func(count int) func(*testing.B) {
+		b.Run(bm.name, func(count uint) func(*testing.B) {
 			return func(b *testing.B) {
 				// setup
-				var arr []int
+				arr := make([]int, count)
 				newint := new(int)
 
 				b.ReportAllocs()
 				b.ResetTimer()
 
 				for i := 0; i < b.N; i++ {
-					for j := 0; j < count; j++ {
+					for j := 0; uint(j) < count; j++ {
 						arr = append(arr, *newint)
 					}
 				}
@@ -607,7 +607,7 @@ func BenchmarkIntSlice(b *testing.B) {
 }
 
 func TestInt16Colony(t *testing.T) {
-	colony := NewInt16Colony()
+	colony := NewInt16Colony(1)
 	t.Run("Insert", func(t *testing.T) {
 		newT := new(int16)
 		tp := colony.Insert(newT)
@@ -628,7 +628,7 @@ func TestInt16Colony(t *testing.T) {
 
 var Int16Benchmarks = []struct {
 	name  string
-	count int
+	count uint
 }{
 	{"1", 1},
 	{"10", 10},
@@ -641,17 +641,17 @@ var Int16Benchmarks = []struct {
 
 func BenchmarkInt16Colony_Insert(b *testing.B) {
 	for _, bm := range Int16Benchmarks {
-		b.Run(bm.name, func(count int) func(*testing.B) {
+		b.Run(bm.name, func(count uint) func(*testing.B) {
 			return func(b *testing.B) {
 				// setup
-				colony := NewInt16Colony()
+				colony := NewInt16Colony(count)
 				newint16 := new(int16)
 
 				b.ReportAllocs()
 				b.ResetTimer()
 
 				for i := 0; i < b.N; i++ {
-					for j := 0; j < count; j++ {
+					for j := 0; uint(j) < count; j++ {
 						newint16 = colony.Insert(newint16)
 					}
 				}
@@ -662,17 +662,17 @@ func BenchmarkInt16Colony_Insert(b *testing.B) {
 
 func BenchmarkInt16Slice(b *testing.B) {
 	for _, bm := range Int16Benchmarks {
-		b.Run(bm.name, func(count int) func(*testing.B) {
+		b.Run(bm.name, func(count uint) func(*testing.B) {
 			return func(b *testing.B) {
 				// setup
-				var arr []int16
+				arr := make([]int16, count)
 				newint16 := new(int16)
 
 				b.ReportAllocs()
 				b.ResetTimer()
 
 				for i := 0; i < b.N; i++ {
-					for j := 0; j < count; j++ {
+					for j := 0; uint(j) < count; j++ {
 						arr = append(arr, *newint16)
 					}
 				}
@@ -682,7 +682,7 @@ func BenchmarkInt16Slice(b *testing.B) {
 }
 
 func TestInt32Colony(t *testing.T) {
-	colony := NewInt32Colony()
+	colony := NewInt32Colony(1)
 	t.Run("Insert", func(t *testing.T) {
 		newT := new(int32)
 		tp := colony.Insert(newT)
@@ -703,7 +703,7 @@ func TestInt32Colony(t *testing.T) {
 
 var Int32Benchmarks = []struct {
 	name  string
-	count int
+	count uint
 }{
 	{"1", 1},
 	{"10", 10},
@@ -716,17 +716,17 @@ var Int32Benchmarks = []struct {
 
 func BenchmarkInt32Colony_Insert(b *testing.B) {
 	for _, bm := range Int32Benchmarks {
-		b.Run(bm.name, func(count int) func(*testing.B) {
+		b.Run(bm.name, func(count uint) func(*testing.B) {
 			return func(b *testing.B) {
 				// setup
-				colony := NewInt32Colony()
+				colony := NewInt32Colony(count)
 				newint32 := new(int32)
 
 				b.ReportAllocs()
 				b.ResetTimer()
 
 				for i := 0; i < b.N; i++ {
-					for j := 0; j < count; j++ {
+					for j := 0; uint(j) < count; j++ {
 						newint32 = colony.Insert(newint32)
 					}
 				}
@@ -737,17 +737,17 @@ func BenchmarkInt32Colony_Insert(b *testing.B) {
 
 func BenchmarkInt32Slice(b *testing.B) {
 	for _, bm := range Int32Benchmarks {
-		b.Run(bm.name, func(count int) func(*testing.B) {
+		b.Run(bm.name, func(count uint) func(*testing.B) {
 			return func(b *testing.B) {
 				// setup
-				var arr []int32
+				arr := make([]int32, count)
 				newint32 := new(int32)
 
 				b.ReportAllocs()
 				b.ResetTimer()
 
 				for i := 0; i < b.N; i++ {
-					for j := 0; j < count; j++ {
+					for j := 0; uint(j) < count; j++ {
 						arr = append(arr, *newint32)
 					}
 				}
@@ -757,7 +757,7 @@ func BenchmarkInt32Slice(b *testing.B) {
 }
 
 func TestInt64Colony(t *testing.T) {
-	colony := NewInt64Colony()
+	colony := NewInt64Colony(1)
 	t.Run("Insert", func(t *testing.T) {
 		newT := new(int64)
 		tp := colony.Insert(newT)
@@ -778,7 +778,7 @@ func TestInt64Colony(t *testing.T) {
 
 var Int64Benchmarks = []struct {
 	name  string
-	count int
+	count uint
 }{
 	{"1", 1},
 	{"10", 10},
@@ -791,17 +791,17 @@ var Int64Benchmarks = []struct {
 
 func BenchmarkInt64Colony_Insert(b *testing.B) {
 	for _, bm := range Int64Benchmarks {
-		b.Run(bm.name, func(count int) func(*testing.B) {
+		b.Run(bm.name, func(count uint) func(*testing.B) {
 			return func(b *testing.B) {
 				// setup
-				colony := NewInt64Colony()
+				colony := NewInt64Colony(count)
 				newint64 := new(int64)
 
 				b.ReportAllocs()
 				b.ResetTimer()
 
 				for i := 0; i < b.N; i++ {
-					for j := 0; j < count; j++ {
+					for j := 0; uint(j) < count; j++ {
 						newint64 = colony.Insert(newint64)
 					}
 				}
@@ -812,17 +812,17 @@ func BenchmarkInt64Colony_Insert(b *testing.B) {
 
 func BenchmarkInt64Slice(b *testing.B) {
 	for _, bm := range Int64Benchmarks {
-		b.Run(bm.name, func(count int) func(*testing.B) {
+		b.Run(bm.name, func(count uint) func(*testing.B) {
 			return func(b *testing.B) {
 				// setup
-				var arr []int64
+				arr := make([]int64, count)
 				newint64 := new(int64)
 
 				b.ReportAllocs()
 				b.ResetTimer()
 
 				for i := 0; i < b.N; i++ {
-					for j := 0; j < count; j++ {
+					for j := 0; uint(j) < count; j++ {
 						arr = append(arr, *newint64)
 					}
 				}
@@ -832,7 +832,7 @@ func BenchmarkInt64Slice(b *testing.B) {
 }
 
 func TestInt8Colony(t *testing.T) {
-	colony := NewInt8Colony()
+	colony := NewInt8Colony(1)
 	t.Run("Insert", func(t *testing.T) {
 		newT := new(int8)
 		tp := colony.Insert(newT)
@@ -853,7 +853,7 @@ func TestInt8Colony(t *testing.T) {
 
 var Int8Benchmarks = []struct {
 	name  string
-	count int
+	count uint
 }{
 	{"1", 1},
 	{"10", 10},
@@ -866,17 +866,17 @@ var Int8Benchmarks = []struct {
 
 func BenchmarkInt8Colony_Insert(b *testing.B) {
 	for _, bm := range Int8Benchmarks {
-		b.Run(bm.name, func(count int) func(*testing.B) {
+		b.Run(bm.name, func(count uint) func(*testing.B) {
 			return func(b *testing.B) {
 				// setup
-				colony := NewInt8Colony()
+				colony := NewInt8Colony(count)
 				newint8 := new(int8)
 
 				b.ReportAllocs()
 				b.ResetTimer()
 
 				for i := 0; i < b.N; i++ {
-					for j := 0; j < count; j++ {
+					for j := 0; uint(j) < count; j++ {
 						newint8 = colony.Insert(newint8)
 					}
 				}
@@ -887,17 +887,17 @@ func BenchmarkInt8Colony_Insert(b *testing.B) {
 
 func BenchmarkInt8Slice(b *testing.B) {
 	for _, bm := range Int8Benchmarks {
-		b.Run(bm.name, func(count int) func(*testing.B) {
+		b.Run(bm.name, func(count uint) func(*testing.B) {
 			return func(b *testing.B) {
 				// setup
-				var arr []int8
+				arr := make([]int8, count)
 				newint8 := new(int8)
 
 				b.ReportAllocs()
 				b.ResetTimer()
 
 				for i := 0; i < b.N; i++ {
-					for j := 0; j < count; j++ {
+					for j := 0; uint(j) < count; j++ {
 						arr = append(arr, *newint8)
 					}
 				}
@@ -907,7 +907,7 @@ func BenchmarkInt8Slice(b *testing.B) {
 }
 
 func TestRuneColony(t *testing.T) {
-	colony := NewRuneColony()
+	colony := NewRuneColony(1)
 	t.Run("Insert", func(t *testing.T) {
 		newT := new(rune)
 		tp := colony.Insert(newT)
@@ -928,7 +928,7 @@ func TestRuneColony(t *testing.T) {
 
 var RuneBenchmarks = []struct {
 	name  string
-	count int
+	count uint
 }{
 	{"1", 1},
 	{"10", 10},
@@ -941,17 +941,17 @@ var RuneBenchmarks = []struct {
 
 func BenchmarkRuneColony_Insert(b *testing.B) {
 	for _, bm := range RuneBenchmarks {
-		b.Run(bm.name, func(count int) func(*testing.B) {
+		b.Run(bm.name, func(count uint) func(*testing.B) {
 			return func(b *testing.B) {
 				// setup
-				colony := NewRuneColony()
+				colony := NewRuneColony(count)
 				newrune := new(rune)
 
 				b.ReportAllocs()
 				b.ResetTimer()
 
 				for i := 0; i < b.N; i++ {
-					for j := 0; j < count; j++ {
+					for j := 0; uint(j) < count; j++ {
 						newrune = colony.Insert(newrune)
 					}
 				}
@@ -962,17 +962,17 @@ func BenchmarkRuneColony_Insert(b *testing.B) {
 
 func BenchmarkRuneSlice(b *testing.B) {
 	for _, bm := range RuneBenchmarks {
-		b.Run(bm.name, func(count int) func(*testing.B) {
+		b.Run(bm.name, func(count uint) func(*testing.B) {
 			return func(b *testing.B) {
 				// setup
-				var arr []rune
+				arr := make([]rune, count)
 				newrune := new(rune)
 
 				b.ReportAllocs()
 				b.ResetTimer()
 
 				for i := 0; i < b.N; i++ {
-					for j := 0; j < count; j++ {
+					for j := 0; uint(j) < count; j++ {
 						arr = append(arr, *newrune)
 					}
 				}
@@ -982,7 +982,7 @@ func BenchmarkRuneSlice(b *testing.B) {
 }
 
 func TestStringColony(t *testing.T) {
-	colony := NewStringColony()
+	colony := NewStringColony(1)
 	t.Run("Insert", func(t *testing.T) {
 		newT := new(string)
 		tp := colony.Insert(newT)
@@ -1003,7 +1003,7 @@ func TestStringColony(t *testing.T) {
 
 var StringBenchmarks = []struct {
 	name  string
-	count int
+	count uint
 }{
 	{"1", 1},
 	{"10", 10},
@@ -1016,17 +1016,17 @@ var StringBenchmarks = []struct {
 
 func BenchmarkStringColony_Insert(b *testing.B) {
 	for _, bm := range StringBenchmarks {
-		b.Run(bm.name, func(count int) func(*testing.B) {
+		b.Run(bm.name, func(count uint) func(*testing.B) {
 			return func(b *testing.B) {
 				// setup
-				colony := NewStringColony()
+				colony := NewStringColony(count)
 				newstring := new(string)
 
 				b.ReportAllocs()
 				b.ResetTimer()
 
 				for i := 0; i < b.N; i++ {
-					for j := 0; j < count; j++ {
+					for j := 0; uint(j) < count; j++ {
 						newstring = colony.Insert(newstring)
 					}
 				}
@@ -1037,17 +1037,17 @@ func BenchmarkStringColony_Insert(b *testing.B) {
 
 func BenchmarkStringSlice(b *testing.B) {
 	for _, bm := range StringBenchmarks {
-		b.Run(bm.name, func(count int) func(*testing.B) {
+		b.Run(bm.name, func(count uint) func(*testing.B) {
 			return func(b *testing.B) {
 				// setup
-				var arr []string
+				arr := make([]string, count)
 				newstring := new(string)
 
 				b.ReportAllocs()
 				b.ResetTimer()
 
 				for i := 0; i < b.N; i++ {
-					for j := 0; j < count; j++ {
+					for j := 0; uint(j) < count; j++ {
 						arr = append(arr, *newstring)
 					}
 				}
@@ -1057,7 +1057,7 @@ func BenchmarkStringSlice(b *testing.B) {
 }
 
 func TestUintColony(t *testing.T) {
-	colony := NewUintColony()
+	colony := NewUintColony(1)
 	t.Run("Insert", func(t *testing.T) {
 		newT := new(uint)
 		tp := colony.Insert(newT)
@@ -1078,7 +1078,7 @@ func TestUintColony(t *testing.T) {
 
 var UintBenchmarks = []struct {
 	name  string
-	count int
+	count uint
 }{
 	{"1", 1},
 	{"10", 10},
@@ -1091,17 +1091,17 @@ var UintBenchmarks = []struct {
 
 func BenchmarkUintColony_Insert(b *testing.B) {
 	for _, bm := range UintBenchmarks {
-		b.Run(bm.name, func(count int) func(*testing.B) {
+		b.Run(bm.name, func(count uint) func(*testing.B) {
 			return func(b *testing.B) {
 				// setup
-				colony := NewUintColony()
+				colony := NewUintColony(count)
 				newuint := new(uint)
 
 				b.ReportAllocs()
 				b.ResetTimer()
 
 				for i := 0; i < b.N; i++ {
-					for j := 0; j < count; j++ {
+					for j := 0; uint(j) < count; j++ {
 						newuint = colony.Insert(newuint)
 					}
 				}
@@ -1112,17 +1112,17 @@ func BenchmarkUintColony_Insert(b *testing.B) {
 
 func BenchmarkUintSlice(b *testing.B) {
 	for _, bm := range UintBenchmarks {
-		b.Run(bm.name, func(count int) func(*testing.B) {
+		b.Run(bm.name, func(count uint) func(*testing.B) {
 			return func(b *testing.B) {
 				// setup
-				var arr []uint
+				arr := make([]uint, count)
 				newuint := new(uint)
 
 				b.ReportAllocs()
 				b.ResetTimer()
 
 				for i := 0; i < b.N; i++ {
-					for j := 0; j < count; j++ {
+					for j := 0; uint(j) < count; j++ {
 						arr = append(arr, *newuint)
 					}
 				}
@@ -1132,7 +1132,7 @@ func BenchmarkUintSlice(b *testing.B) {
 }
 
 func TestUint16Colony(t *testing.T) {
-	colony := NewUint16Colony()
+	colony := NewUint16Colony(1)
 	t.Run("Insert", func(t *testing.T) {
 		newT := new(uint16)
 		tp := colony.Insert(newT)
@@ -1153,7 +1153,7 @@ func TestUint16Colony(t *testing.T) {
 
 var Uint16Benchmarks = []struct {
 	name  string
-	count int
+	count uint
 }{
 	{"1", 1},
 	{"10", 10},
@@ -1166,17 +1166,17 @@ var Uint16Benchmarks = []struct {
 
 func BenchmarkUint16Colony_Insert(b *testing.B) {
 	for _, bm := range Uint16Benchmarks {
-		b.Run(bm.name, func(count int) func(*testing.B) {
+		b.Run(bm.name, func(count uint) func(*testing.B) {
 			return func(b *testing.B) {
 				// setup
-				colony := NewUint16Colony()
+				colony := NewUint16Colony(count)
 				newuint16 := new(uint16)
 
 				b.ReportAllocs()
 				b.ResetTimer()
 
 				for i := 0; i < b.N; i++ {
-					for j := 0; j < count; j++ {
+					for j := 0; uint(j) < count; j++ {
 						newuint16 = colony.Insert(newuint16)
 					}
 				}
@@ -1187,17 +1187,17 @@ func BenchmarkUint16Colony_Insert(b *testing.B) {
 
 func BenchmarkUint16Slice(b *testing.B) {
 	for _, bm := range Uint16Benchmarks {
-		b.Run(bm.name, func(count int) func(*testing.B) {
+		b.Run(bm.name, func(count uint) func(*testing.B) {
 			return func(b *testing.B) {
 				// setup
-				var arr []uint16
+				arr := make([]uint16, count)
 				newuint16 := new(uint16)
 
 				b.ReportAllocs()
 				b.ResetTimer()
 
 				for i := 0; i < b.N; i++ {
-					for j := 0; j < count; j++ {
+					for j := 0; uint(j) < count; j++ {
 						arr = append(arr, *newuint16)
 					}
 				}
@@ -1207,7 +1207,7 @@ func BenchmarkUint16Slice(b *testing.B) {
 }
 
 func TestUint32Colony(t *testing.T) {
-	colony := NewUint32Colony()
+	colony := NewUint32Colony(1)
 	t.Run("Insert", func(t *testing.T) {
 		newT := new(uint32)
 		tp := colony.Insert(newT)
@@ -1228,7 +1228,7 @@ func TestUint32Colony(t *testing.T) {
 
 var Uint32Benchmarks = []struct {
 	name  string
-	count int
+	count uint
 }{
 	{"1", 1},
 	{"10", 10},
@@ -1241,17 +1241,17 @@ var Uint32Benchmarks = []struct {
 
 func BenchmarkUint32Colony_Insert(b *testing.B) {
 	for _, bm := range Uint32Benchmarks {
-		b.Run(bm.name, func(count int) func(*testing.B) {
+		b.Run(bm.name, func(count uint) func(*testing.B) {
 			return func(b *testing.B) {
 				// setup
-				colony := NewUint32Colony()
+				colony := NewUint32Colony(count)
 				newuint32 := new(uint32)
 
 				b.ReportAllocs()
 				b.ResetTimer()
 
 				for i := 0; i < b.N; i++ {
-					for j := 0; j < count; j++ {
+					for j := 0; uint(j) < count; j++ {
 						newuint32 = colony.Insert(newuint32)
 					}
 				}
@@ -1262,17 +1262,17 @@ func BenchmarkUint32Colony_Insert(b *testing.B) {
 
 func BenchmarkUint32Slice(b *testing.B) {
 	for _, bm := range Uint32Benchmarks {
-		b.Run(bm.name, func(count int) func(*testing.B) {
+		b.Run(bm.name, func(count uint) func(*testing.B) {
 			return func(b *testing.B) {
 				// setup
-				var arr []uint32
+				arr := make([]uint32, count)
 				newuint32 := new(uint32)
 
 				b.ReportAllocs()
 				b.ResetTimer()
 
 				for i := 0; i < b.N; i++ {
-					for j := 0; j < count; j++ {
+					for j := 0; uint(j) < count; j++ {
 						arr = append(arr, *newuint32)
 					}
 				}
@@ -1282,7 +1282,7 @@ func BenchmarkUint32Slice(b *testing.B) {
 }
 
 func TestUint64Colony(t *testing.T) {
-	colony := NewUint64Colony()
+	colony := NewUint64Colony(1)
 	t.Run("Insert", func(t *testing.T) {
 		newT := new(uint64)
 		tp := colony.Insert(newT)
@@ -1303,7 +1303,7 @@ func TestUint64Colony(t *testing.T) {
 
 var Uint64Benchmarks = []struct {
 	name  string
-	count int
+	count uint
 }{
 	{"1", 1},
 	{"10", 10},
@@ -1316,17 +1316,17 @@ var Uint64Benchmarks = []struct {
 
 func BenchmarkUint64Colony_Insert(b *testing.B) {
 	for _, bm := range Uint64Benchmarks {
-		b.Run(bm.name, func(count int) func(*testing.B) {
+		b.Run(bm.name, func(count uint) func(*testing.B) {
 			return func(b *testing.B) {
 				// setup
-				colony := NewUint64Colony()
+				colony := NewUint64Colony(count)
 				newuint64 := new(uint64)
 
 				b.ReportAllocs()
 				b.ResetTimer()
 
 				for i := 0; i < b.N; i++ {
-					for j := 0; j < count; j++ {
+					for j := 0; uint(j) < count; j++ {
 						newuint64 = colony.Insert(newuint64)
 					}
 				}
@@ -1337,17 +1337,17 @@ func BenchmarkUint64Colony_Insert(b *testing.B) {
 
 func BenchmarkUint64Slice(b *testing.B) {
 	for _, bm := range Uint64Benchmarks {
-		b.Run(bm.name, func(count int) func(*testing.B) {
+		b.Run(bm.name, func(count uint) func(*testing.B) {
 			return func(b *testing.B) {
 				// setup
-				var arr []uint64
+				arr := make([]uint64, count)
 				newuint64 := new(uint64)
 
 				b.ReportAllocs()
 				b.ResetTimer()
 
 				for i := 0; i < b.N; i++ {
-					for j := 0; j < count; j++ {
+					for j := 0; uint(j) < count; j++ {
 						arr = append(arr, *newuint64)
 					}
 				}
@@ -1357,7 +1357,7 @@ func BenchmarkUint64Slice(b *testing.B) {
 }
 
 func TestUint8Colony(t *testing.T) {
-	colony := NewUint8Colony()
+	colony := NewUint8Colony(1)
 	t.Run("Insert", func(t *testing.T) {
 		newT := new(uint8)
 		tp := colony.Insert(newT)
@@ -1378,7 +1378,7 @@ func TestUint8Colony(t *testing.T) {
 
 var Uint8Benchmarks = []struct {
 	name  string
-	count int
+	count uint
 }{
 	{"1", 1},
 	{"10", 10},
@@ -1391,17 +1391,17 @@ var Uint8Benchmarks = []struct {
 
 func BenchmarkUint8Colony_Insert(b *testing.B) {
 	for _, bm := range Uint8Benchmarks {
-		b.Run(bm.name, func(count int) func(*testing.B) {
+		b.Run(bm.name, func(count uint) func(*testing.B) {
 			return func(b *testing.B) {
 				// setup
-				colony := NewUint8Colony()
+				colony := NewUint8Colony(count)
 				newuint8 := new(uint8)
 
 				b.ReportAllocs()
 				b.ResetTimer()
 
 				for i := 0; i < b.N; i++ {
-					for j := 0; j < count; j++ {
+					for j := 0; uint(j) < count; j++ {
 						newuint8 = colony.Insert(newuint8)
 					}
 				}
@@ -1412,17 +1412,17 @@ func BenchmarkUint8Colony_Insert(b *testing.B) {
 
 func BenchmarkUint8Slice(b *testing.B) {
 	for _, bm := range Uint8Benchmarks {
-		b.Run(bm.name, func(count int) func(*testing.B) {
+		b.Run(bm.name, func(count uint) func(*testing.B) {
 			return func(b *testing.B) {
 				// setup
-				var arr []uint8
+				arr := make([]uint8, count)
 				newuint8 := new(uint8)
 
 				b.ReportAllocs()
 				b.ResetTimer()
 
 				for i := 0; i < b.N; i++ {
-					for j := 0; j < count; j++ {
+					for j := 0; uint(j) < count; j++ {
 						arr = append(arr, *newuint8)
 					}
 				}
@@ -1432,7 +1432,7 @@ func BenchmarkUint8Slice(b *testing.B) {
 }
 
 func TestUintptrColony(t *testing.T) {
-	colony := NewUintptrColony()
+	colony := NewUintptrColony(1)
 	t.Run("Insert", func(t *testing.T) {
 		newT := new(uintptr)
 		tp := colony.Insert(newT)
@@ -1453,7 +1453,7 @@ func TestUintptrColony(t *testing.T) {
 
 var UintptrBenchmarks = []struct {
 	name  string
-	count int
+	count uint
 }{
 	{"1", 1},
 	{"10", 10},
@@ -1466,17 +1466,17 @@ var UintptrBenchmarks = []struct {
 
 func BenchmarkUintptrColony_Insert(b *testing.B) {
 	for _, bm := range UintptrBenchmarks {
-		b.Run(bm.name, func(count int) func(*testing.B) {
+		b.Run(bm.name, func(count uint) func(*testing.B) {
 			return func(b *testing.B) {
 				// setup
-				colony := NewUintptrColony()
+				colony := NewUintptrColony(count)
 				newuintptr := new(uintptr)
 
 				b.ReportAllocs()
 				b.ResetTimer()
 
 				for i := 0; i < b.N; i++ {
-					for j := 0; j < count; j++ {
+					for j := 0; uint(j) < count; j++ {
 						newuintptr = colony.Insert(newuintptr)
 					}
 				}
@@ -1487,17 +1487,17 @@ func BenchmarkUintptrColony_Insert(b *testing.B) {
 
 func BenchmarkUintptrSlice(b *testing.B) {
 	for _, bm := range UintptrBenchmarks {
-		b.Run(bm.name, func(count int) func(*testing.B) {
+		b.Run(bm.name, func(count uint) func(*testing.B) {
 			return func(b *testing.B) {
 				// setup
-				var arr []uintptr
+				arr := make([]uintptr, count)
 				newuintptr := new(uintptr)
 
 				b.ReportAllocs()
 				b.ResetTimer()
 
 				for i := 0; i < b.N; i++ {
-					for j := 0; j < count; j++ {
+					for j := 0; uint(j) < count; j++ {
 						arr = append(arr, *newuintptr)
 					}
 				}

@@ -15,14 +15,14 @@ type BoolColony struct {
 	entry *colonyGroupbool
 }
 
-// NewBoolColony returns a new colony of ValueBool's.
-func NewBoolColony() *BoolColony {
+// NewBoolColony returns a new colony of bool's.
+func NewBoolColony(size uint) *BoolColony {
 	return &BoolColony{
-		entry: newboolGroup(nil),
+		entry: newboolGroup(nil, size),
 	}
 }
 
-// Iterate sends pointers to all instances of ValueBool in the colony to the given channel.
+// Iterate sends pointers to all instances of bool in the colony to the given channel.
 func (c *BoolColony) Iterate() <-chan *bool {
 	ch := make(chan *bool)
 	var wg sync.WaitGroup
@@ -52,17 +52,18 @@ func (c *BoolColony) Delete(tp *bool) {
 	c.entry.Delete(tp)
 }
 
-func newboolGroup(previous *colonyGroupbool) *colonyGroupbool {
+func newboolGroup(previous *colonyGroupbool, size uint) *colonyGroupbool {
 	var g colonyGroupbool
-	if previous != nil {
-		g.data = make([]bool, len(previous.data)*2)
-		g.index = bitset.New(uint(len(previous.data) * 2))
+	if size > 0 {
+		g.data = make([]bool, size)
+		g.index = bitset.New(size)
 	} else {
 		g.data = make([]bool, 8)
 		g.index = bitset.New(8)
 	}
 	g.next = nil
 	g.l = &sync.RWMutex{}
+	g.previous = previous
 	g.minPtr = uintptr(unsafe.Pointer(&g.data[0]))
 	g.maxPtr = uintptr(unsafe.Pointer(&g.data[len(g.data)-1]))
 	return &g
@@ -89,7 +90,7 @@ func (g *colonyGroupbool) Insert(t *bool) (tp *bool) {
 		return
 	}
 	if g.next == nil {
-		g.next = newboolGroup(g)
+		g.next = newboolGroup(g, uint(len(g.data)*2))
 	}
 	g.l.Unlock()
 	return g.next.Insert(t)
@@ -120,14 +121,14 @@ type ByteColony struct {
 	entry *colonyGroupbyte
 }
 
-// NewByteColony returns a new colony of ValueByte's.
-func NewByteColony() *ByteColony {
+// NewByteColony returns a new colony of byte's.
+func NewByteColony(size uint) *ByteColony {
 	return &ByteColony{
-		entry: newbyteGroup(nil),
+		entry: newbyteGroup(nil, size),
 	}
 }
 
-// Iterate sends pointers to all instances of ValueByte in the colony to the given channel.
+// Iterate sends pointers to all instances of byte in the colony to the given channel.
 func (c *ByteColony) Iterate() <-chan *byte {
 	ch := make(chan *byte)
 	var wg sync.WaitGroup
@@ -157,17 +158,18 @@ func (c *ByteColony) Delete(tp *byte) {
 	c.entry.Delete(tp)
 }
 
-func newbyteGroup(previous *colonyGroupbyte) *colonyGroupbyte {
+func newbyteGroup(previous *colonyGroupbyte, size uint) *colonyGroupbyte {
 	var g colonyGroupbyte
-	if previous != nil {
-		g.data = make([]byte, len(previous.data)*2)
-		g.index = bitset.New(uint(len(previous.data) * 2))
+	if size > 0 {
+		g.data = make([]byte, size)
+		g.index = bitset.New(size)
 	} else {
 		g.data = make([]byte, 8)
 		g.index = bitset.New(8)
 	}
 	g.next = nil
 	g.l = &sync.RWMutex{}
+	g.previous = previous
 	g.minPtr = uintptr(unsafe.Pointer(&g.data[0]))
 	g.maxPtr = uintptr(unsafe.Pointer(&g.data[len(g.data)-1]))
 	return &g
@@ -194,7 +196,7 @@ func (g *colonyGroupbyte) Insert(t *byte) (tp *byte) {
 		return
 	}
 	if g.next == nil {
-		g.next = newbyteGroup(g)
+		g.next = newbyteGroup(g, uint(len(g.data)*2))
 	}
 	g.l.Unlock()
 	return g.next.Insert(t)
@@ -225,14 +227,14 @@ type Complex128Colony struct {
 	entry *colonyGroupcomplex128
 }
 
-// NewComplex128Colony returns a new colony of ValueComplex128's.
-func NewComplex128Colony() *Complex128Colony {
+// NewComplex128Colony returns a new colony of complex128's.
+func NewComplex128Colony(size uint) *Complex128Colony {
 	return &Complex128Colony{
-		entry: newcomplex128Group(nil),
+		entry: newcomplex128Group(nil, size),
 	}
 }
 
-// Iterate sends pointers to all instances of ValueComplex128 in the colony to the given channel.
+// Iterate sends pointers to all instances of complex128 in the colony to the given channel.
 func (c *Complex128Colony) Iterate() <-chan *complex128 {
 	ch := make(chan *complex128)
 	var wg sync.WaitGroup
@@ -262,17 +264,18 @@ func (c *Complex128Colony) Delete(tp *complex128) {
 	c.entry.Delete(tp)
 }
 
-func newcomplex128Group(previous *colonyGroupcomplex128) *colonyGroupcomplex128 {
+func newcomplex128Group(previous *colonyGroupcomplex128, size uint) *colonyGroupcomplex128 {
 	var g colonyGroupcomplex128
-	if previous != nil {
-		g.data = make([]complex128, len(previous.data)*2)
-		g.index = bitset.New(uint(len(previous.data) * 2))
+	if size > 0 {
+		g.data = make([]complex128, size)
+		g.index = bitset.New(size)
 	} else {
 		g.data = make([]complex128, 8)
 		g.index = bitset.New(8)
 	}
 	g.next = nil
 	g.l = &sync.RWMutex{}
+	g.previous = previous
 	g.minPtr = uintptr(unsafe.Pointer(&g.data[0]))
 	g.maxPtr = uintptr(unsafe.Pointer(&g.data[len(g.data)-1]))
 	return &g
@@ -299,7 +302,7 @@ func (g *colonyGroupcomplex128) Insert(t *complex128) (tp *complex128) {
 		return
 	}
 	if g.next == nil {
-		g.next = newcomplex128Group(g)
+		g.next = newcomplex128Group(g, uint(len(g.data)*2))
 	}
 	g.l.Unlock()
 	return g.next.Insert(t)
@@ -330,14 +333,14 @@ type Complex64Colony struct {
 	entry *colonyGroupcomplex64
 }
 
-// NewComplex64Colony returns a new colony of ValueComplex64's.
-func NewComplex64Colony() *Complex64Colony {
+// NewComplex64Colony returns a new colony of complex64's.
+func NewComplex64Colony(size uint) *Complex64Colony {
 	return &Complex64Colony{
-		entry: newcomplex64Group(nil),
+		entry: newcomplex64Group(nil, size),
 	}
 }
 
-// Iterate sends pointers to all instances of ValueComplex64 in the colony to the given channel.
+// Iterate sends pointers to all instances of complex64 in the colony to the given channel.
 func (c *Complex64Colony) Iterate() <-chan *complex64 {
 	ch := make(chan *complex64)
 	var wg sync.WaitGroup
@@ -367,17 +370,18 @@ func (c *Complex64Colony) Delete(tp *complex64) {
 	c.entry.Delete(tp)
 }
 
-func newcomplex64Group(previous *colonyGroupcomplex64) *colonyGroupcomplex64 {
+func newcomplex64Group(previous *colonyGroupcomplex64, size uint) *colonyGroupcomplex64 {
 	var g colonyGroupcomplex64
-	if previous != nil {
-		g.data = make([]complex64, len(previous.data)*2)
-		g.index = bitset.New(uint(len(previous.data) * 2))
+	if size > 0 {
+		g.data = make([]complex64, size)
+		g.index = bitset.New(size)
 	} else {
 		g.data = make([]complex64, 8)
 		g.index = bitset.New(8)
 	}
 	g.next = nil
 	g.l = &sync.RWMutex{}
+	g.previous = previous
 	g.minPtr = uintptr(unsafe.Pointer(&g.data[0]))
 	g.maxPtr = uintptr(unsafe.Pointer(&g.data[len(g.data)-1]))
 	return &g
@@ -404,7 +408,7 @@ func (g *colonyGroupcomplex64) Insert(t *complex64) (tp *complex64) {
 		return
 	}
 	if g.next == nil {
-		g.next = newcomplex64Group(g)
+		g.next = newcomplex64Group(g, uint(len(g.data)*2))
 	}
 	g.l.Unlock()
 	return g.next.Insert(t)
@@ -435,14 +439,14 @@ type ErrorColony struct {
 	entry *colonyGrouperror
 }
 
-// NewErrorColony returns a new colony of ValueError's.
-func NewErrorColony() *ErrorColony {
+// NewErrorColony returns a new colony of error's.
+func NewErrorColony(size uint) *ErrorColony {
 	return &ErrorColony{
-		entry: newerrorGroup(nil),
+		entry: newerrorGroup(nil, size),
 	}
 }
 
-// Iterate sends pointers to all instances of ValueError in the colony to the given channel.
+// Iterate sends pointers to all instances of error in the colony to the given channel.
 func (c *ErrorColony) Iterate() <-chan *error {
 	ch := make(chan *error)
 	var wg sync.WaitGroup
@@ -472,17 +476,18 @@ func (c *ErrorColony) Delete(tp *error) {
 	c.entry.Delete(tp)
 }
 
-func newerrorGroup(previous *colonyGrouperror) *colonyGrouperror {
+func newerrorGroup(previous *colonyGrouperror, size uint) *colonyGrouperror {
 	var g colonyGrouperror
-	if previous != nil {
-		g.data = make([]error, len(previous.data)*2)
-		g.index = bitset.New(uint(len(previous.data) * 2))
+	if size > 0 {
+		g.data = make([]error, size)
+		g.index = bitset.New(size)
 	} else {
 		g.data = make([]error, 8)
 		g.index = bitset.New(8)
 	}
 	g.next = nil
 	g.l = &sync.RWMutex{}
+	g.previous = previous
 	g.minPtr = uintptr(unsafe.Pointer(&g.data[0]))
 	g.maxPtr = uintptr(unsafe.Pointer(&g.data[len(g.data)-1]))
 	return &g
@@ -509,7 +514,7 @@ func (g *colonyGrouperror) Insert(t *error) (tp *error) {
 		return
 	}
 	if g.next == nil {
-		g.next = newerrorGroup(g)
+		g.next = newerrorGroup(g, uint(len(g.data)*2))
 	}
 	g.l.Unlock()
 	return g.next.Insert(t)
@@ -540,14 +545,14 @@ type Float32Colony struct {
 	entry *colonyGroupfloat32
 }
 
-// NewFloat32Colony returns a new colony of ValueFloat32's.
-func NewFloat32Colony() *Float32Colony {
+// NewFloat32Colony returns a new colony of float32's.
+func NewFloat32Colony(size uint) *Float32Colony {
 	return &Float32Colony{
-		entry: newfloat32Group(nil),
+		entry: newfloat32Group(nil, size),
 	}
 }
 
-// Iterate sends pointers to all instances of ValueFloat32 in the colony to the given channel.
+// Iterate sends pointers to all instances of float32 in the colony to the given channel.
 func (c *Float32Colony) Iterate() <-chan *float32 {
 	ch := make(chan *float32)
 	var wg sync.WaitGroup
@@ -577,17 +582,18 @@ func (c *Float32Colony) Delete(tp *float32) {
 	c.entry.Delete(tp)
 }
 
-func newfloat32Group(previous *colonyGroupfloat32) *colonyGroupfloat32 {
+func newfloat32Group(previous *colonyGroupfloat32, size uint) *colonyGroupfloat32 {
 	var g colonyGroupfloat32
-	if previous != nil {
-		g.data = make([]float32, len(previous.data)*2)
-		g.index = bitset.New(uint(len(previous.data) * 2))
+	if size > 0 {
+		g.data = make([]float32, size)
+		g.index = bitset.New(size)
 	} else {
 		g.data = make([]float32, 8)
 		g.index = bitset.New(8)
 	}
 	g.next = nil
 	g.l = &sync.RWMutex{}
+	g.previous = previous
 	g.minPtr = uintptr(unsafe.Pointer(&g.data[0]))
 	g.maxPtr = uintptr(unsafe.Pointer(&g.data[len(g.data)-1]))
 	return &g
@@ -614,7 +620,7 @@ func (g *colonyGroupfloat32) Insert(t *float32) (tp *float32) {
 		return
 	}
 	if g.next == nil {
-		g.next = newfloat32Group(g)
+		g.next = newfloat32Group(g, uint(len(g.data)*2))
 	}
 	g.l.Unlock()
 	return g.next.Insert(t)
@@ -645,14 +651,14 @@ type Float64Colony struct {
 	entry *colonyGroupfloat64
 }
 
-// NewFloat64Colony returns a new colony of ValueFloat64's.
-func NewFloat64Colony() *Float64Colony {
+// NewFloat64Colony returns a new colony of float64's.
+func NewFloat64Colony(size uint) *Float64Colony {
 	return &Float64Colony{
-		entry: newfloat64Group(nil),
+		entry: newfloat64Group(nil, size),
 	}
 }
 
-// Iterate sends pointers to all instances of ValueFloat64 in the colony to the given channel.
+// Iterate sends pointers to all instances of float64 in the colony to the given channel.
 func (c *Float64Colony) Iterate() <-chan *float64 {
 	ch := make(chan *float64)
 	var wg sync.WaitGroup
@@ -682,17 +688,18 @@ func (c *Float64Colony) Delete(tp *float64) {
 	c.entry.Delete(tp)
 }
 
-func newfloat64Group(previous *colonyGroupfloat64) *colonyGroupfloat64 {
+func newfloat64Group(previous *colonyGroupfloat64, size uint) *colonyGroupfloat64 {
 	var g colonyGroupfloat64
-	if previous != nil {
-		g.data = make([]float64, len(previous.data)*2)
-		g.index = bitset.New(uint(len(previous.data) * 2))
+	if size > 0 {
+		g.data = make([]float64, size)
+		g.index = bitset.New(size)
 	} else {
 		g.data = make([]float64, 8)
 		g.index = bitset.New(8)
 	}
 	g.next = nil
 	g.l = &sync.RWMutex{}
+	g.previous = previous
 	g.minPtr = uintptr(unsafe.Pointer(&g.data[0]))
 	g.maxPtr = uintptr(unsafe.Pointer(&g.data[len(g.data)-1]))
 	return &g
@@ -719,7 +726,7 @@ func (g *colonyGroupfloat64) Insert(t *float64) (tp *float64) {
 		return
 	}
 	if g.next == nil {
-		g.next = newfloat64Group(g)
+		g.next = newfloat64Group(g, uint(len(g.data)*2))
 	}
 	g.l.Unlock()
 	return g.next.Insert(t)
@@ -750,14 +757,14 @@ type IntColony struct {
 	entry *colonyGroupint
 }
 
-// NewIntColony returns a new colony of ValueInt's.
-func NewIntColony() *IntColony {
+// NewIntColony returns a new colony of int's.
+func NewIntColony(size uint) *IntColony {
 	return &IntColony{
-		entry: newintGroup(nil),
+		entry: newintGroup(nil, size),
 	}
 }
 
-// Iterate sends pointers to all instances of ValueInt in the colony to the given channel.
+// Iterate sends pointers to all instances of int in the colony to the given channel.
 func (c *IntColony) Iterate() <-chan *int {
 	ch := make(chan *int)
 	var wg sync.WaitGroup
@@ -787,17 +794,18 @@ func (c *IntColony) Delete(tp *int) {
 	c.entry.Delete(tp)
 }
 
-func newintGroup(previous *colonyGroupint) *colonyGroupint {
+func newintGroup(previous *colonyGroupint, size uint) *colonyGroupint {
 	var g colonyGroupint
-	if previous != nil {
-		g.data = make([]int, len(previous.data)*2)
-		g.index = bitset.New(uint(len(previous.data) * 2))
+	if size > 0 {
+		g.data = make([]int, size)
+		g.index = bitset.New(size)
 	} else {
 		g.data = make([]int, 8)
 		g.index = bitset.New(8)
 	}
 	g.next = nil
 	g.l = &sync.RWMutex{}
+	g.previous = previous
 	g.minPtr = uintptr(unsafe.Pointer(&g.data[0]))
 	g.maxPtr = uintptr(unsafe.Pointer(&g.data[len(g.data)-1]))
 	return &g
@@ -824,7 +832,7 @@ func (g *colonyGroupint) Insert(t *int) (tp *int) {
 		return
 	}
 	if g.next == nil {
-		g.next = newintGroup(g)
+		g.next = newintGroup(g, uint(len(g.data)*2))
 	}
 	g.l.Unlock()
 	return g.next.Insert(t)
@@ -855,14 +863,14 @@ type Int16Colony struct {
 	entry *colonyGroupint16
 }
 
-// NewInt16Colony returns a new colony of ValueInt16's.
-func NewInt16Colony() *Int16Colony {
+// NewInt16Colony returns a new colony of int16's.
+func NewInt16Colony(size uint) *Int16Colony {
 	return &Int16Colony{
-		entry: newint16Group(nil),
+		entry: newint16Group(nil, size),
 	}
 }
 
-// Iterate sends pointers to all instances of ValueInt16 in the colony to the given channel.
+// Iterate sends pointers to all instances of int16 in the colony to the given channel.
 func (c *Int16Colony) Iterate() <-chan *int16 {
 	ch := make(chan *int16)
 	var wg sync.WaitGroup
@@ -892,17 +900,18 @@ func (c *Int16Colony) Delete(tp *int16) {
 	c.entry.Delete(tp)
 }
 
-func newint16Group(previous *colonyGroupint16) *colonyGroupint16 {
+func newint16Group(previous *colonyGroupint16, size uint) *colonyGroupint16 {
 	var g colonyGroupint16
-	if previous != nil {
-		g.data = make([]int16, len(previous.data)*2)
-		g.index = bitset.New(uint(len(previous.data) * 2))
+	if size > 0 {
+		g.data = make([]int16, size)
+		g.index = bitset.New(size)
 	} else {
 		g.data = make([]int16, 8)
 		g.index = bitset.New(8)
 	}
 	g.next = nil
 	g.l = &sync.RWMutex{}
+	g.previous = previous
 	g.minPtr = uintptr(unsafe.Pointer(&g.data[0]))
 	g.maxPtr = uintptr(unsafe.Pointer(&g.data[len(g.data)-1]))
 	return &g
@@ -929,7 +938,7 @@ func (g *colonyGroupint16) Insert(t *int16) (tp *int16) {
 		return
 	}
 	if g.next == nil {
-		g.next = newint16Group(g)
+		g.next = newint16Group(g, uint(len(g.data)*2))
 	}
 	g.l.Unlock()
 	return g.next.Insert(t)
@@ -960,14 +969,14 @@ type Int32Colony struct {
 	entry *colonyGroupint32
 }
 
-// NewInt32Colony returns a new colony of ValueInt32's.
-func NewInt32Colony() *Int32Colony {
+// NewInt32Colony returns a new colony of int32's.
+func NewInt32Colony(size uint) *Int32Colony {
 	return &Int32Colony{
-		entry: newint32Group(nil),
+		entry: newint32Group(nil, size),
 	}
 }
 
-// Iterate sends pointers to all instances of ValueInt32 in the colony to the given channel.
+// Iterate sends pointers to all instances of int32 in the colony to the given channel.
 func (c *Int32Colony) Iterate() <-chan *int32 {
 	ch := make(chan *int32)
 	var wg sync.WaitGroup
@@ -997,17 +1006,18 @@ func (c *Int32Colony) Delete(tp *int32) {
 	c.entry.Delete(tp)
 }
 
-func newint32Group(previous *colonyGroupint32) *colonyGroupint32 {
+func newint32Group(previous *colonyGroupint32, size uint) *colonyGroupint32 {
 	var g colonyGroupint32
-	if previous != nil {
-		g.data = make([]int32, len(previous.data)*2)
-		g.index = bitset.New(uint(len(previous.data) * 2))
+	if size > 0 {
+		g.data = make([]int32, size)
+		g.index = bitset.New(size)
 	} else {
 		g.data = make([]int32, 8)
 		g.index = bitset.New(8)
 	}
 	g.next = nil
 	g.l = &sync.RWMutex{}
+	g.previous = previous
 	g.minPtr = uintptr(unsafe.Pointer(&g.data[0]))
 	g.maxPtr = uintptr(unsafe.Pointer(&g.data[len(g.data)-1]))
 	return &g
@@ -1034,7 +1044,7 @@ func (g *colonyGroupint32) Insert(t *int32) (tp *int32) {
 		return
 	}
 	if g.next == nil {
-		g.next = newint32Group(g)
+		g.next = newint32Group(g, uint(len(g.data)*2))
 	}
 	g.l.Unlock()
 	return g.next.Insert(t)
@@ -1065,14 +1075,14 @@ type Int64Colony struct {
 	entry *colonyGroupint64
 }
 
-// NewInt64Colony returns a new colony of ValueInt64's.
-func NewInt64Colony() *Int64Colony {
+// NewInt64Colony returns a new colony of int64's.
+func NewInt64Colony(size uint) *Int64Colony {
 	return &Int64Colony{
-		entry: newint64Group(nil),
+		entry: newint64Group(nil, size),
 	}
 }
 
-// Iterate sends pointers to all instances of ValueInt64 in the colony to the given channel.
+// Iterate sends pointers to all instances of int64 in the colony to the given channel.
 func (c *Int64Colony) Iterate() <-chan *int64 {
 	ch := make(chan *int64)
 	var wg sync.WaitGroup
@@ -1102,17 +1112,18 @@ func (c *Int64Colony) Delete(tp *int64) {
 	c.entry.Delete(tp)
 }
 
-func newint64Group(previous *colonyGroupint64) *colonyGroupint64 {
+func newint64Group(previous *colonyGroupint64, size uint) *colonyGroupint64 {
 	var g colonyGroupint64
-	if previous != nil {
-		g.data = make([]int64, len(previous.data)*2)
-		g.index = bitset.New(uint(len(previous.data) * 2))
+	if size > 0 {
+		g.data = make([]int64, size)
+		g.index = bitset.New(size)
 	} else {
 		g.data = make([]int64, 8)
 		g.index = bitset.New(8)
 	}
 	g.next = nil
 	g.l = &sync.RWMutex{}
+	g.previous = previous
 	g.minPtr = uintptr(unsafe.Pointer(&g.data[0]))
 	g.maxPtr = uintptr(unsafe.Pointer(&g.data[len(g.data)-1]))
 	return &g
@@ -1139,7 +1150,7 @@ func (g *colonyGroupint64) Insert(t *int64) (tp *int64) {
 		return
 	}
 	if g.next == nil {
-		g.next = newint64Group(g)
+		g.next = newint64Group(g, uint(len(g.data)*2))
 	}
 	g.l.Unlock()
 	return g.next.Insert(t)
@@ -1170,14 +1181,14 @@ type Int8Colony struct {
 	entry *colonyGroupint8
 }
 
-// NewInt8Colony returns a new colony of ValueInt8's.
-func NewInt8Colony() *Int8Colony {
+// NewInt8Colony returns a new colony of int8's.
+func NewInt8Colony(size uint) *Int8Colony {
 	return &Int8Colony{
-		entry: newint8Group(nil),
+		entry: newint8Group(nil, size),
 	}
 }
 
-// Iterate sends pointers to all instances of ValueInt8 in the colony to the given channel.
+// Iterate sends pointers to all instances of int8 in the colony to the given channel.
 func (c *Int8Colony) Iterate() <-chan *int8 {
 	ch := make(chan *int8)
 	var wg sync.WaitGroup
@@ -1207,17 +1218,18 @@ func (c *Int8Colony) Delete(tp *int8) {
 	c.entry.Delete(tp)
 }
 
-func newint8Group(previous *colonyGroupint8) *colonyGroupint8 {
+func newint8Group(previous *colonyGroupint8, size uint) *colonyGroupint8 {
 	var g colonyGroupint8
-	if previous != nil {
-		g.data = make([]int8, len(previous.data)*2)
-		g.index = bitset.New(uint(len(previous.data) * 2))
+	if size > 0 {
+		g.data = make([]int8, size)
+		g.index = bitset.New(size)
 	} else {
 		g.data = make([]int8, 8)
 		g.index = bitset.New(8)
 	}
 	g.next = nil
 	g.l = &sync.RWMutex{}
+	g.previous = previous
 	g.minPtr = uintptr(unsafe.Pointer(&g.data[0]))
 	g.maxPtr = uintptr(unsafe.Pointer(&g.data[len(g.data)-1]))
 	return &g
@@ -1244,7 +1256,7 @@ func (g *colonyGroupint8) Insert(t *int8) (tp *int8) {
 		return
 	}
 	if g.next == nil {
-		g.next = newint8Group(g)
+		g.next = newint8Group(g, uint(len(g.data)*2))
 	}
 	g.l.Unlock()
 	return g.next.Insert(t)
@@ -1275,14 +1287,14 @@ type RuneColony struct {
 	entry *colonyGrouprune
 }
 
-// NewRuneColony returns a new colony of ValueRune's.
-func NewRuneColony() *RuneColony {
+// NewRuneColony returns a new colony of rune's.
+func NewRuneColony(size uint) *RuneColony {
 	return &RuneColony{
-		entry: newruneGroup(nil),
+		entry: newruneGroup(nil, size),
 	}
 }
 
-// Iterate sends pointers to all instances of ValueRune in the colony to the given channel.
+// Iterate sends pointers to all instances of rune in the colony to the given channel.
 func (c *RuneColony) Iterate() <-chan *rune {
 	ch := make(chan *rune)
 	var wg sync.WaitGroup
@@ -1312,17 +1324,18 @@ func (c *RuneColony) Delete(tp *rune) {
 	c.entry.Delete(tp)
 }
 
-func newruneGroup(previous *colonyGrouprune) *colonyGrouprune {
+func newruneGroup(previous *colonyGrouprune, size uint) *colonyGrouprune {
 	var g colonyGrouprune
-	if previous != nil {
-		g.data = make([]rune, len(previous.data)*2)
-		g.index = bitset.New(uint(len(previous.data) * 2))
+	if size > 0 {
+		g.data = make([]rune, size)
+		g.index = bitset.New(size)
 	} else {
 		g.data = make([]rune, 8)
 		g.index = bitset.New(8)
 	}
 	g.next = nil
 	g.l = &sync.RWMutex{}
+	g.previous = previous
 	g.minPtr = uintptr(unsafe.Pointer(&g.data[0]))
 	g.maxPtr = uintptr(unsafe.Pointer(&g.data[len(g.data)-1]))
 	return &g
@@ -1349,7 +1362,7 @@ func (g *colonyGrouprune) Insert(t *rune) (tp *rune) {
 		return
 	}
 	if g.next == nil {
-		g.next = newruneGroup(g)
+		g.next = newruneGroup(g, uint(len(g.data)*2))
 	}
 	g.l.Unlock()
 	return g.next.Insert(t)
@@ -1380,14 +1393,14 @@ type StringColony struct {
 	entry *colonyGroupstring
 }
 
-// NewStringColony returns a new colony of ValueString's.
-func NewStringColony() *StringColony {
+// NewStringColony returns a new colony of string's.
+func NewStringColony(size uint) *StringColony {
 	return &StringColony{
-		entry: newstringGroup(nil),
+		entry: newstringGroup(nil, size),
 	}
 }
 
-// Iterate sends pointers to all instances of ValueString in the colony to the given channel.
+// Iterate sends pointers to all instances of string in the colony to the given channel.
 func (c *StringColony) Iterate() <-chan *string {
 	ch := make(chan *string)
 	var wg sync.WaitGroup
@@ -1417,17 +1430,18 @@ func (c *StringColony) Delete(tp *string) {
 	c.entry.Delete(tp)
 }
 
-func newstringGroup(previous *colonyGroupstring) *colonyGroupstring {
+func newstringGroup(previous *colonyGroupstring, size uint) *colonyGroupstring {
 	var g colonyGroupstring
-	if previous != nil {
-		g.data = make([]string, len(previous.data)*2)
-		g.index = bitset.New(uint(len(previous.data) * 2))
+	if size > 0 {
+		g.data = make([]string, size)
+		g.index = bitset.New(size)
 	} else {
 		g.data = make([]string, 8)
 		g.index = bitset.New(8)
 	}
 	g.next = nil
 	g.l = &sync.RWMutex{}
+	g.previous = previous
 	g.minPtr = uintptr(unsafe.Pointer(&g.data[0]))
 	g.maxPtr = uintptr(unsafe.Pointer(&g.data[len(g.data)-1]))
 	return &g
@@ -1454,7 +1468,7 @@ func (g *colonyGroupstring) Insert(t *string) (tp *string) {
 		return
 	}
 	if g.next == nil {
-		g.next = newstringGroup(g)
+		g.next = newstringGroup(g, uint(len(g.data)*2))
 	}
 	g.l.Unlock()
 	return g.next.Insert(t)
@@ -1485,14 +1499,14 @@ type UintColony struct {
 	entry *colonyGroupuint
 }
 
-// NewUintColony returns a new colony of ValueUint's.
-func NewUintColony() *UintColony {
+// NewUintColony returns a new colony of uint's.
+func NewUintColony(size uint) *UintColony {
 	return &UintColony{
-		entry: newuintGroup(nil),
+		entry: newuintGroup(nil, size),
 	}
 }
 
-// Iterate sends pointers to all instances of ValueUint in the colony to the given channel.
+// Iterate sends pointers to all instances of uint in the colony to the given channel.
 func (c *UintColony) Iterate() <-chan *uint {
 	ch := make(chan *uint)
 	var wg sync.WaitGroup
@@ -1522,17 +1536,18 @@ func (c *UintColony) Delete(tp *uint) {
 	c.entry.Delete(tp)
 }
 
-func newuintGroup(previous *colonyGroupuint) *colonyGroupuint {
+func newuintGroup(previous *colonyGroupuint, size uint) *colonyGroupuint {
 	var g colonyGroupuint
-	if previous != nil {
-		g.data = make([]uint, len(previous.data)*2)
-		g.index = bitset.New(uint(len(previous.data) * 2))
+	if size > 0 {
+		g.data = make([]uint, size)
+		g.index = bitset.New(size)
 	} else {
 		g.data = make([]uint, 8)
 		g.index = bitset.New(8)
 	}
 	g.next = nil
 	g.l = &sync.RWMutex{}
+	g.previous = previous
 	g.minPtr = uintptr(unsafe.Pointer(&g.data[0]))
 	g.maxPtr = uintptr(unsafe.Pointer(&g.data[len(g.data)-1]))
 	return &g
@@ -1559,7 +1574,7 @@ func (g *colonyGroupuint) Insert(t *uint) (tp *uint) {
 		return
 	}
 	if g.next == nil {
-		g.next = newuintGroup(g)
+		g.next = newuintGroup(g, uint(len(g.data)*2))
 	}
 	g.l.Unlock()
 	return g.next.Insert(t)
@@ -1590,14 +1605,14 @@ type Uint16Colony struct {
 	entry *colonyGroupuint16
 }
 
-// NewUint16Colony returns a new colony of ValueUint16's.
-func NewUint16Colony() *Uint16Colony {
+// NewUint16Colony returns a new colony of uint16's.
+func NewUint16Colony(size uint) *Uint16Colony {
 	return &Uint16Colony{
-		entry: newuint16Group(nil),
+		entry: newuint16Group(nil, size),
 	}
 }
 
-// Iterate sends pointers to all instances of ValueUint16 in the colony to the given channel.
+// Iterate sends pointers to all instances of uint16 in the colony to the given channel.
 func (c *Uint16Colony) Iterate() <-chan *uint16 {
 	ch := make(chan *uint16)
 	var wg sync.WaitGroup
@@ -1627,17 +1642,18 @@ func (c *Uint16Colony) Delete(tp *uint16) {
 	c.entry.Delete(tp)
 }
 
-func newuint16Group(previous *colonyGroupuint16) *colonyGroupuint16 {
+func newuint16Group(previous *colonyGroupuint16, size uint) *colonyGroupuint16 {
 	var g colonyGroupuint16
-	if previous != nil {
-		g.data = make([]uint16, len(previous.data)*2)
-		g.index = bitset.New(uint(len(previous.data) * 2))
+	if size > 0 {
+		g.data = make([]uint16, size)
+		g.index = bitset.New(size)
 	} else {
 		g.data = make([]uint16, 8)
 		g.index = bitset.New(8)
 	}
 	g.next = nil
 	g.l = &sync.RWMutex{}
+	g.previous = previous
 	g.minPtr = uintptr(unsafe.Pointer(&g.data[0]))
 	g.maxPtr = uintptr(unsafe.Pointer(&g.data[len(g.data)-1]))
 	return &g
@@ -1664,7 +1680,7 @@ func (g *colonyGroupuint16) Insert(t *uint16) (tp *uint16) {
 		return
 	}
 	if g.next == nil {
-		g.next = newuint16Group(g)
+		g.next = newuint16Group(g, uint(len(g.data)*2))
 	}
 	g.l.Unlock()
 	return g.next.Insert(t)
@@ -1695,14 +1711,14 @@ type Uint32Colony struct {
 	entry *colonyGroupuint32
 }
 
-// NewUint32Colony returns a new colony of ValueUint32's.
-func NewUint32Colony() *Uint32Colony {
+// NewUint32Colony returns a new colony of uint32's.
+func NewUint32Colony(size uint) *Uint32Colony {
 	return &Uint32Colony{
-		entry: newuint32Group(nil),
+		entry: newuint32Group(nil, size),
 	}
 }
 
-// Iterate sends pointers to all instances of ValueUint32 in the colony to the given channel.
+// Iterate sends pointers to all instances of uint32 in the colony to the given channel.
 func (c *Uint32Colony) Iterate() <-chan *uint32 {
 	ch := make(chan *uint32)
 	var wg sync.WaitGroup
@@ -1732,17 +1748,18 @@ func (c *Uint32Colony) Delete(tp *uint32) {
 	c.entry.Delete(tp)
 }
 
-func newuint32Group(previous *colonyGroupuint32) *colonyGroupuint32 {
+func newuint32Group(previous *colonyGroupuint32, size uint) *colonyGroupuint32 {
 	var g colonyGroupuint32
-	if previous != nil {
-		g.data = make([]uint32, len(previous.data)*2)
-		g.index = bitset.New(uint(len(previous.data) * 2))
+	if size > 0 {
+		g.data = make([]uint32, size)
+		g.index = bitset.New(size)
 	} else {
 		g.data = make([]uint32, 8)
 		g.index = bitset.New(8)
 	}
 	g.next = nil
 	g.l = &sync.RWMutex{}
+	g.previous = previous
 	g.minPtr = uintptr(unsafe.Pointer(&g.data[0]))
 	g.maxPtr = uintptr(unsafe.Pointer(&g.data[len(g.data)-1]))
 	return &g
@@ -1769,7 +1786,7 @@ func (g *colonyGroupuint32) Insert(t *uint32) (tp *uint32) {
 		return
 	}
 	if g.next == nil {
-		g.next = newuint32Group(g)
+		g.next = newuint32Group(g, uint(len(g.data)*2))
 	}
 	g.l.Unlock()
 	return g.next.Insert(t)
@@ -1800,14 +1817,14 @@ type Uint64Colony struct {
 	entry *colonyGroupuint64
 }
 
-// NewUint64Colony returns a new colony of ValueUint64's.
-func NewUint64Colony() *Uint64Colony {
+// NewUint64Colony returns a new colony of uint64's.
+func NewUint64Colony(size uint) *Uint64Colony {
 	return &Uint64Colony{
-		entry: newuint64Group(nil),
+		entry: newuint64Group(nil, size),
 	}
 }
 
-// Iterate sends pointers to all instances of ValueUint64 in the colony to the given channel.
+// Iterate sends pointers to all instances of uint64 in the colony to the given channel.
 func (c *Uint64Colony) Iterate() <-chan *uint64 {
 	ch := make(chan *uint64)
 	var wg sync.WaitGroup
@@ -1837,17 +1854,18 @@ func (c *Uint64Colony) Delete(tp *uint64) {
 	c.entry.Delete(tp)
 }
 
-func newuint64Group(previous *colonyGroupuint64) *colonyGroupuint64 {
+func newuint64Group(previous *colonyGroupuint64, size uint) *colonyGroupuint64 {
 	var g colonyGroupuint64
-	if previous != nil {
-		g.data = make([]uint64, len(previous.data)*2)
-		g.index = bitset.New(uint(len(previous.data) * 2))
+	if size > 0 {
+		g.data = make([]uint64, size)
+		g.index = bitset.New(size)
 	} else {
 		g.data = make([]uint64, 8)
 		g.index = bitset.New(8)
 	}
 	g.next = nil
 	g.l = &sync.RWMutex{}
+	g.previous = previous
 	g.minPtr = uintptr(unsafe.Pointer(&g.data[0]))
 	g.maxPtr = uintptr(unsafe.Pointer(&g.data[len(g.data)-1]))
 	return &g
@@ -1874,7 +1892,7 @@ func (g *colonyGroupuint64) Insert(t *uint64) (tp *uint64) {
 		return
 	}
 	if g.next == nil {
-		g.next = newuint64Group(g)
+		g.next = newuint64Group(g, uint(len(g.data)*2))
 	}
 	g.l.Unlock()
 	return g.next.Insert(t)
@@ -1905,14 +1923,14 @@ type Uint8Colony struct {
 	entry *colonyGroupuint8
 }
 
-// NewUint8Colony returns a new colony of ValueUint8's.
-func NewUint8Colony() *Uint8Colony {
+// NewUint8Colony returns a new colony of uint8's.
+func NewUint8Colony(size uint) *Uint8Colony {
 	return &Uint8Colony{
-		entry: newuint8Group(nil),
+		entry: newuint8Group(nil, size),
 	}
 }
 
-// Iterate sends pointers to all instances of ValueUint8 in the colony to the given channel.
+// Iterate sends pointers to all instances of uint8 in the colony to the given channel.
 func (c *Uint8Colony) Iterate() <-chan *uint8 {
 	ch := make(chan *uint8)
 	var wg sync.WaitGroup
@@ -1942,17 +1960,18 @@ func (c *Uint8Colony) Delete(tp *uint8) {
 	c.entry.Delete(tp)
 }
 
-func newuint8Group(previous *colonyGroupuint8) *colonyGroupuint8 {
+func newuint8Group(previous *colonyGroupuint8, size uint) *colonyGroupuint8 {
 	var g colonyGroupuint8
-	if previous != nil {
-		g.data = make([]uint8, len(previous.data)*2)
-		g.index = bitset.New(uint(len(previous.data) * 2))
+	if size > 0 {
+		g.data = make([]uint8, size)
+		g.index = bitset.New(size)
 	} else {
 		g.data = make([]uint8, 8)
 		g.index = bitset.New(8)
 	}
 	g.next = nil
 	g.l = &sync.RWMutex{}
+	g.previous = previous
 	g.minPtr = uintptr(unsafe.Pointer(&g.data[0]))
 	g.maxPtr = uintptr(unsafe.Pointer(&g.data[len(g.data)-1]))
 	return &g
@@ -1979,7 +1998,7 @@ func (g *colonyGroupuint8) Insert(t *uint8) (tp *uint8) {
 		return
 	}
 	if g.next == nil {
-		g.next = newuint8Group(g)
+		g.next = newuint8Group(g, uint(len(g.data)*2))
 	}
 	g.l.Unlock()
 	return g.next.Insert(t)
@@ -2010,14 +2029,14 @@ type UintptrColony struct {
 	entry *colonyGroupuintptr
 }
 
-// NewUintptrColony returns a new colony of ValueUintptr's.
-func NewUintptrColony() *UintptrColony {
+// NewUintptrColony returns a new colony of uintptr's.
+func NewUintptrColony(size uint) *UintptrColony {
 	return &UintptrColony{
-		entry: newuintptrGroup(nil),
+		entry: newuintptrGroup(nil, size),
 	}
 }
 
-// Iterate sends pointers to all instances of ValueUintptr in the colony to the given channel.
+// Iterate sends pointers to all instances of uintptr in the colony to the given channel.
 func (c *UintptrColony) Iterate() <-chan *uintptr {
 	ch := make(chan *uintptr)
 	var wg sync.WaitGroup
@@ -2047,17 +2066,18 @@ func (c *UintptrColony) Delete(tp *uintptr) {
 	c.entry.Delete(tp)
 }
 
-func newuintptrGroup(previous *colonyGroupuintptr) *colonyGroupuintptr {
+func newuintptrGroup(previous *colonyGroupuintptr, size uint) *colonyGroupuintptr {
 	var g colonyGroupuintptr
-	if previous != nil {
-		g.data = make([]uintptr, len(previous.data)*2)
-		g.index = bitset.New(uint(len(previous.data) * 2))
+	if size > 0 {
+		g.data = make([]uintptr, size)
+		g.index = bitset.New(size)
 	} else {
 		g.data = make([]uintptr, 8)
 		g.index = bitset.New(8)
 	}
 	g.next = nil
 	g.l = &sync.RWMutex{}
+	g.previous = previous
 	g.minPtr = uintptr(unsafe.Pointer(&g.data[0]))
 	g.maxPtr = uintptr(unsafe.Pointer(&g.data[len(g.data)-1]))
 	return &g
@@ -2084,7 +2104,7 @@ func (g *colonyGroupuintptr) Insert(t *uintptr) (tp *uintptr) {
 		return
 	}
 	if g.next == nil {
-		g.next = newuintptrGroup(g)
+		g.next = newuintptrGroup(g, uint(len(g.data)*2))
 	}
 	g.l.Unlock()
 	return g.next.Insert(t)
