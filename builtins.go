@@ -9,21 +9,24 @@ import (
 	"unsafe"
 )
 
+// BoolColony represents a colony of Bools.
 type BoolColony struct {
 	entry *colonyGroupbool
 }
 
-// NewBoolColony returns a new colony of bool's.
+// NewBoolColony returns a new colony of Bools.
 func NewBoolColony(size uint) *BoolColony {
 	return &BoolColony{
 		entry: newboolGroup(nil, size),
 	}
 }
 
+// Insert returns a pointer from the colony and initializes it with the provided data.
 func (c *BoolColony) Insert(t *bool) (tp *bool) {
 	return c.entry.Insert(t)
 }
 
+// Delete returns a pointer to the colony.
 func (c *BoolColony) Delete(tp *bool) {
 	c.entry.Delete(tp)
 }
@@ -81,21 +84,24 @@ func (g *colonyGroupbool) Delete(tp *bool) {
 	return
 }
 
+// ByteColony represents a colony of Bytes.
 type ByteColony struct {
 	entry *colonyGroupbyte
 }
 
-// NewByteColony returns a new colony of byte's.
+// NewByteColony returns a new colony of Bytes.
 func NewByteColony(size uint) *ByteColony {
 	return &ByteColony{
 		entry: newbyteGroup(nil, size),
 	}
 }
 
+// Insert returns a pointer from the colony and initializes it with the provided data.
 func (c *ByteColony) Insert(t *byte) (tp *byte) {
 	return c.entry.Insert(t)
 }
 
+// Delete returns a pointer to the colony.
 func (c *ByteColony) Delete(tp *byte) {
 	c.entry.Delete(tp)
 }
@@ -153,21 +159,24 @@ func (g *colonyGroupbyte) Delete(tp *byte) {
 	return
 }
 
+// Complex128Colony represents a colony of Complex128s.
 type Complex128Colony struct {
 	entry *colonyGroupcomplex128
 }
 
-// NewComplex128Colony returns a new colony of complex128's.
+// NewComplex128Colony returns a new colony of Complex128s.
 func NewComplex128Colony(size uint) *Complex128Colony {
 	return &Complex128Colony{
 		entry: newcomplex128Group(nil, size),
 	}
 }
 
+// Insert returns a pointer from the colony and initializes it with the provided data.
 func (c *Complex128Colony) Insert(t *complex128) (tp *complex128) {
 	return c.entry.Insert(t)
 }
 
+// Delete returns a pointer to the colony.
 func (c *Complex128Colony) Delete(tp *complex128) {
 	c.entry.Delete(tp)
 }
@@ -225,21 +234,24 @@ func (g *colonyGroupcomplex128) Delete(tp *complex128) {
 	return
 }
 
+// Complex64Colony represents a colony of Complex64s.
 type Complex64Colony struct {
 	entry *colonyGroupcomplex64
 }
 
-// NewComplex64Colony returns a new colony of complex64's.
+// NewComplex64Colony returns a new colony of Complex64s.
 func NewComplex64Colony(size uint) *Complex64Colony {
 	return &Complex64Colony{
 		entry: newcomplex64Group(nil, size),
 	}
 }
 
+// Insert returns a pointer from the colony and initializes it with the provided data.
 func (c *Complex64Colony) Insert(t *complex64) (tp *complex64) {
 	return c.entry.Insert(t)
 }
 
+// Delete returns a pointer to the colony.
 func (c *Complex64Colony) Delete(tp *complex64) {
 	c.entry.Delete(tp)
 }
@@ -297,21 +309,24 @@ func (g *colonyGroupcomplex64) Delete(tp *complex64) {
 	return
 }
 
+// ErrorColony represents a colony of Errors.
 type ErrorColony struct {
 	entry *colonyGrouperror
 }
 
-// NewErrorColony returns a new colony of error's.
+// NewErrorColony returns a new colony of Errors.
 func NewErrorColony(size uint) *ErrorColony {
 	return &ErrorColony{
 		entry: newerrorGroup(nil, size),
 	}
 }
 
+// Insert returns a pointer from the colony and initializes it with the provided data.
 func (c *ErrorColony) Insert(t *error) (tp *error) {
 	return c.entry.Insert(t)
 }
 
+// Delete returns a pointer to the colony.
 func (c *ErrorColony) Delete(tp *error) {
 	c.entry.Delete(tp)
 }
@@ -369,21 +384,24 @@ func (g *colonyGrouperror) Delete(tp *error) {
 	return
 }
 
+// Float32Colony represents a colony of Float32s.
 type Float32Colony struct {
 	entry *colonyGroupfloat32
 }
 
-// NewFloat32Colony returns a new colony of float32's.
+// NewFloat32Colony returns a new colony of Float32s.
 func NewFloat32Colony(size uint) *Float32Colony {
 	return &Float32Colony{
 		entry: newfloat32Group(nil, size),
 	}
 }
 
+// Insert returns a pointer from the colony and initializes it with the provided data.
 func (c *Float32Colony) Insert(t *float32) (tp *float32) {
 	return c.entry.Insert(t)
 }
 
+// Delete returns a pointer to the colony.
 func (c *Float32Colony) Delete(tp *float32) {
 	c.entry.Delete(tp)
 }
@@ -441,21 +459,24 @@ func (g *colonyGroupfloat32) Delete(tp *float32) {
 	return
 }
 
+// Float64Colony represents a colony of Float64s.
 type Float64Colony struct {
 	entry *colonyGroupfloat64
 }
 
-// NewFloat64Colony returns a new colony of float64's.
+// NewFloat64Colony returns a new colony of Float64s.
 func NewFloat64Colony(size uint) *Float64Colony {
 	return &Float64Colony{
 		entry: newfloat64Group(nil, size),
 	}
 }
 
+// Insert returns a pointer from the colony and initializes it with the provided data.
 func (c *Float64Colony) Insert(t *float64) (tp *float64) {
 	return c.entry.Insert(t)
 }
 
+// Delete returns a pointer to the colony.
 func (c *Float64Colony) Delete(tp *float64) {
 	c.entry.Delete(tp)
 }
@@ -513,21 +534,24 @@ func (g *colonyGroupfloat64) Delete(tp *float64) {
 	return
 }
 
+// IntColony represents a colony of Ints.
 type IntColony struct {
 	entry *colonyGroupint
 }
 
-// NewIntColony returns a new colony of int's.
+// NewIntColony returns a new colony of Ints.
 func NewIntColony(size uint) *IntColony {
 	return &IntColony{
 		entry: newintGroup(nil, size),
 	}
 }
 
+// Insert returns a pointer from the colony and initializes it with the provided data.
 func (c *IntColony) Insert(t *int) (tp *int) {
 	return c.entry.Insert(t)
 }
 
+// Delete returns a pointer to the colony.
 func (c *IntColony) Delete(tp *int) {
 	c.entry.Delete(tp)
 }
@@ -585,21 +609,24 @@ func (g *colonyGroupint) Delete(tp *int) {
 	return
 }
 
+// Int16Colony represents a colony of Int16s.
 type Int16Colony struct {
 	entry *colonyGroupint16
 }
 
-// NewInt16Colony returns a new colony of int16's.
+// NewInt16Colony returns a new colony of Int16s.
 func NewInt16Colony(size uint) *Int16Colony {
 	return &Int16Colony{
 		entry: newint16Group(nil, size),
 	}
 }
 
+// Insert returns a pointer from the colony and initializes it with the provided data.
 func (c *Int16Colony) Insert(t *int16) (tp *int16) {
 	return c.entry.Insert(t)
 }
 
+// Delete returns a pointer to the colony.
 func (c *Int16Colony) Delete(tp *int16) {
 	c.entry.Delete(tp)
 }
@@ -657,21 +684,24 @@ func (g *colonyGroupint16) Delete(tp *int16) {
 	return
 }
 
+// Int32Colony represents a colony of Int32s.
 type Int32Colony struct {
 	entry *colonyGroupint32
 }
 
-// NewInt32Colony returns a new colony of int32's.
+// NewInt32Colony returns a new colony of Int32s.
 func NewInt32Colony(size uint) *Int32Colony {
 	return &Int32Colony{
 		entry: newint32Group(nil, size),
 	}
 }
 
+// Insert returns a pointer from the colony and initializes it with the provided data.
 func (c *Int32Colony) Insert(t *int32) (tp *int32) {
 	return c.entry.Insert(t)
 }
 
+// Delete returns a pointer to the colony.
 func (c *Int32Colony) Delete(tp *int32) {
 	c.entry.Delete(tp)
 }
@@ -729,21 +759,24 @@ func (g *colonyGroupint32) Delete(tp *int32) {
 	return
 }
 
+// Int64Colony represents a colony of Int64s.
 type Int64Colony struct {
 	entry *colonyGroupint64
 }
 
-// NewInt64Colony returns a new colony of int64's.
+// NewInt64Colony returns a new colony of Int64s.
 func NewInt64Colony(size uint) *Int64Colony {
 	return &Int64Colony{
 		entry: newint64Group(nil, size),
 	}
 }
 
+// Insert returns a pointer from the colony and initializes it with the provided data.
 func (c *Int64Colony) Insert(t *int64) (tp *int64) {
 	return c.entry.Insert(t)
 }
 
+// Delete returns a pointer to the colony.
 func (c *Int64Colony) Delete(tp *int64) {
 	c.entry.Delete(tp)
 }
@@ -801,21 +834,24 @@ func (g *colonyGroupint64) Delete(tp *int64) {
 	return
 }
 
+// Int8Colony represents a colony of Int8s.
 type Int8Colony struct {
 	entry *colonyGroupint8
 }
 
-// NewInt8Colony returns a new colony of int8's.
+// NewInt8Colony returns a new colony of Int8s.
 func NewInt8Colony(size uint) *Int8Colony {
 	return &Int8Colony{
 		entry: newint8Group(nil, size),
 	}
 }
 
+// Insert returns a pointer from the colony and initializes it with the provided data.
 func (c *Int8Colony) Insert(t *int8) (tp *int8) {
 	return c.entry.Insert(t)
 }
 
+// Delete returns a pointer to the colony.
 func (c *Int8Colony) Delete(tp *int8) {
 	c.entry.Delete(tp)
 }
@@ -873,21 +909,24 @@ func (g *colonyGroupint8) Delete(tp *int8) {
 	return
 }
 
+// RuneColony represents a colony of Runes.
 type RuneColony struct {
 	entry *colonyGrouprune
 }
 
-// NewRuneColony returns a new colony of rune's.
+// NewRuneColony returns a new colony of Runes.
 func NewRuneColony(size uint) *RuneColony {
 	return &RuneColony{
 		entry: newruneGroup(nil, size),
 	}
 }
 
+// Insert returns a pointer from the colony and initializes it with the provided data.
 func (c *RuneColony) Insert(t *rune) (tp *rune) {
 	return c.entry.Insert(t)
 }
 
+// Delete returns a pointer to the colony.
 func (c *RuneColony) Delete(tp *rune) {
 	c.entry.Delete(tp)
 }
@@ -945,21 +984,24 @@ func (g *colonyGrouprune) Delete(tp *rune) {
 	return
 }
 
+// StringColony represents a colony of Strings.
 type StringColony struct {
 	entry *colonyGroupstring
 }
 
-// NewStringColony returns a new colony of string's.
+// NewStringColony returns a new colony of Strings.
 func NewStringColony(size uint) *StringColony {
 	return &StringColony{
 		entry: newstringGroup(nil, size),
 	}
 }
 
+// Insert returns a pointer from the colony and initializes it with the provided data.
 func (c *StringColony) Insert(t *string) (tp *string) {
 	return c.entry.Insert(t)
 }
 
+// Delete returns a pointer to the colony.
 func (c *StringColony) Delete(tp *string) {
 	c.entry.Delete(tp)
 }
@@ -1017,21 +1059,24 @@ func (g *colonyGroupstring) Delete(tp *string) {
 	return
 }
 
+// UintColony represents a colony of Uints.
 type UintColony struct {
 	entry *colonyGroupuint
 }
 
-// NewUintColony returns a new colony of uint's.
+// NewUintColony returns a new colony of Uints.
 func NewUintColony(size uint) *UintColony {
 	return &UintColony{
 		entry: newuintGroup(nil, size),
 	}
 }
 
+// Insert returns a pointer from the colony and initializes it with the provided data.
 func (c *UintColony) Insert(t *uint) (tp *uint) {
 	return c.entry.Insert(t)
 }
 
+// Delete returns a pointer to the colony.
 func (c *UintColony) Delete(tp *uint) {
 	c.entry.Delete(tp)
 }
@@ -1089,21 +1134,24 @@ func (g *colonyGroupuint) Delete(tp *uint) {
 	return
 }
 
+// Uint16Colony represents a colony of Uint16s.
 type Uint16Colony struct {
 	entry *colonyGroupuint16
 }
 
-// NewUint16Colony returns a new colony of uint16's.
+// NewUint16Colony returns a new colony of Uint16s.
 func NewUint16Colony(size uint) *Uint16Colony {
 	return &Uint16Colony{
 		entry: newuint16Group(nil, size),
 	}
 }
 
+// Insert returns a pointer from the colony and initializes it with the provided data.
 func (c *Uint16Colony) Insert(t *uint16) (tp *uint16) {
 	return c.entry.Insert(t)
 }
 
+// Delete returns a pointer to the colony.
 func (c *Uint16Colony) Delete(tp *uint16) {
 	c.entry.Delete(tp)
 }
@@ -1161,21 +1209,24 @@ func (g *colonyGroupuint16) Delete(tp *uint16) {
 	return
 }
 
+// Uint32Colony represents a colony of Uint32s.
 type Uint32Colony struct {
 	entry *colonyGroupuint32
 }
 
-// NewUint32Colony returns a new colony of uint32's.
+// NewUint32Colony returns a new colony of Uint32s.
 func NewUint32Colony(size uint) *Uint32Colony {
 	return &Uint32Colony{
 		entry: newuint32Group(nil, size),
 	}
 }
 
+// Insert returns a pointer from the colony and initializes it with the provided data.
 func (c *Uint32Colony) Insert(t *uint32) (tp *uint32) {
 	return c.entry.Insert(t)
 }
 
+// Delete returns a pointer to the colony.
 func (c *Uint32Colony) Delete(tp *uint32) {
 	c.entry.Delete(tp)
 }
@@ -1233,21 +1284,24 @@ func (g *colonyGroupuint32) Delete(tp *uint32) {
 	return
 }
 
+// Uint64Colony represents a colony of Uint64s.
 type Uint64Colony struct {
 	entry *colonyGroupuint64
 }
 
-// NewUint64Colony returns a new colony of uint64's.
+// NewUint64Colony returns a new colony of Uint64s.
 func NewUint64Colony(size uint) *Uint64Colony {
 	return &Uint64Colony{
 		entry: newuint64Group(nil, size),
 	}
 }
 
+// Insert returns a pointer from the colony and initializes it with the provided data.
 func (c *Uint64Colony) Insert(t *uint64) (tp *uint64) {
 	return c.entry.Insert(t)
 }
 
+// Delete returns a pointer to the colony.
 func (c *Uint64Colony) Delete(tp *uint64) {
 	c.entry.Delete(tp)
 }
@@ -1305,21 +1359,24 @@ func (g *colonyGroupuint64) Delete(tp *uint64) {
 	return
 }
 
+// Uint8Colony represents a colony of Uint8s.
 type Uint8Colony struct {
 	entry *colonyGroupuint8
 }
 
-// NewUint8Colony returns a new colony of uint8's.
+// NewUint8Colony returns a new colony of Uint8s.
 func NewUint8Colony(size uint) *Uint8Colony {
 	return &Uint8Colony{
 		entry: newuint8Group(nil, size),
 	}
 }
 
+// Insert returns a pointer from the colony and initializes it with the provided data.
 func (c *Uint8Colony) Insert(t *uint8) (tp *uint8) {
 	return c.entry.Insert(t)
 }
 
+// Delete returns a pointer to the colony.
 func (c *Uint8Colony) Delete(tp *uint8) {
 	c.entry.Delete(tp)
 }
@@ -1377,21 +1434,24 @@ func (g *colonyGroupuint8) Delete(tp *uint8) {
 	return
 }
 
+// UintptrColony represents a colony of Uintptrs.
 type UintptrColony struct {
 	entry *colonyGroupuintptr
 }
 
-// NewUintptrColony returns a new colony of uintptr's.
+// NewUintptrColony returns a new colony of Uintptrs.
 func NewUintptrColony(size uint) *UintptrColony {
 	return &UintptrColony{
 		entry: newuintptrGroup(nil, size),
 	}
 }
 
+// Insert returns a pointer from the colony and initializes it with the provided data.
 func (c *UintptrColony) Insert(t *uintptr) (tp *uintptr) {
 	return c.entry.Insert(t)
 }
 
+// Delete returns a pointer to the colony.
 func (c *UintptrColony) Delete(tp *uintptr) {
 	c.entry.Delete(tp)
 }

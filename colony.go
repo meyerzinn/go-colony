@@ -9,21 +9,24 @@ import (
 
 type ValueType generic.Type
 
+// ValueTypeColony represents a colony of ValueTypes.
 type ValueTypeColony struct {
 	entry *colonyGroupValueType
 }
 
-// NewValueTypeColony returns a new colony of ValueType's.
+// NewValueTypeColony returns a new colony of ValueTypes.
 func NewValueTypeColony(size uint) *ValueTypeColony {
 	return &ValueTypeColony{
 		entry: newValueTypeGroup(nil, size),
 	}
 }
 
+// Insert returns a pointer from the colony and initializes it with the provided data.
 func (c *ValueTypeColony) Insert(t *ValueType) (tp *ValueType) {
 	return c.entry.Insert(t)
 }
 
+// Delete returns a pointer to the colony.
 func (c *ValueTypeColony) Delete(tp *ValueType) {
 	c.entry.Delete(tp)
 }
