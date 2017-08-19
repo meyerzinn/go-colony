@@ -1,4 +1,4 @@
-//go:generate genny -in=colony_test.go -out=builtins_test.go gen "ValueType=complex64"
+//go:generate genny -in=colony_test.go -out=builtins_test.go gen "ValueType=BUILTINS"
 package colony
 
 import (
@@ -34,6 +34,8 @@ var ValueTypeBenchmarks = []struct {
 	{"1000", 1000},
 	{"10000", 10000},
 	{"100000", 100000},
+	{"1000000", 1000000},
+
 }
 
 func BenchmarkValueTypeColony_Insert(b *testing.B) {
@@ -41,7 +43,8 @@ func BenchmarkValueTypeColony_Insert(b *testing.B) {
 		b.Run(bm.name, func(count uint) func(*testing.B) {
 			return func(b *testing.B) {
 				// setup
-				colony := NewValueTypeColony(count / 5)
+				colony := NewValueTypeColony(count / 4) // hint
+				ptrs := make([]*ValueType, count)
 				newValueType := new(ValueType)
 
 				b.ReportAllocs()
@@ -49,7 +52,7 @@ func BenchmarkValueTypeColony_Insert(b *testing.B) {
 
 				for i := 0; i < b.N; i++ {
 					for j := 0; uint(j) < count; j++ {
-						newValueType = colony.Insert(newValueType)
+						ptrs[j] = colony.Insert(newValueType)
 					}
 				}
 			}
@@ -62,7 +65,8 @@ func BenchmarkValueTypeSlice(b *testing.B) {
 		b.Run(bm.name, func(count uint) func(*testing.B) {
 			return func(b *testing.B) {
 				// setup
-				 arr := make([]ValueType, count / 5)
+				arr := make([]ValueType, count / 5)
+				ptrs := make([]*ValueType, count)
 				newValueType := new(ValueType)
 
 				b.ReportAllocs()
@@ -71,6 +75,7 @@ func BenchmarkValueTypeSlice(b *testing.B) {
 				for i := 0; i < b.N; i++ {
 					for j := 0; uint(j) < count; j++ {
 						arr = append(arr, *newValueType)
+						ptrs[j] = &arr[j]
 					}
 				}
 			}

@@ -1,4 +1,4 @@
-//go:generate genny -in=colony.go -out=builtins.go gen "ValueType=complex64"
+//go:generate genny -in=colony.go -out=builtins.go gen "ValueType=BUILTINS"
 package colony
 
 import (
