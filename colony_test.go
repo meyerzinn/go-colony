@@ -1,18 +1,19 @@
+//go:generate genny -in=colony_test.go -out=builtins_test.go gen "ValueType=BUILTINS"
 package colony
 
 import "testing"
 
-func TestTypeColony(t *testing.T) {
-	colony := NewTypeColony()
+func TestValueTypeColony(t *testing.T) {
+	colony := NewValueTypeColony()
 	t.Run("Insert", func(t *testing.T) {
-		newT := new(Type)
+		newT := new(ValueType)
 		tp := colony.Insert(newT)
 		if *tp != *newT {
 			t.Fatalf("value of pointer returned from Insert does not equal the inserted value: (*newT) %v != (*tp) %v", *newT, *tp)
 		}
 	})
 	t.Run("Delete", func(t *testing.T) {
-		newT := new(Type)
+		newT := new(ValueType)
 		tp := colony.Insert(newT)
 		colony.Delete(tp)
 		tp2 := colony.Insert(newT)
@@ -22,26 +23,54 @@ func TestTypeColony(t *testing.T) {
 	})
 }
 
-func BenchmarkTypeColony_Insert(b *testing.B) {
-	benchmarks := []struct {
-		name  string
-		count int
-	}{
-		{"1", 1},
-		{"10", 10},
-		{"100", 100},
-		{"1000", 1000},
-		{"10000", 10000},
-	}
-	colony := NewTypeColony()
-	newT := new(Type)
-	b.ReportAllocs()
-	for _, bm := range benchmarks {
+var ValueTypeBenchmarks = []struct {
+	name  string
+	count int
+}{
+	{"1", 1},
+	{"10", 10},
+	{"100", 100},
+	{"1000", 1000},
+	{"10000", 10000},
+	{"100000", 100000},
+	{"1000000", 1000000},
+}
+
+func BenchmarkValueTypeColony_Insert(b *testing.B) {
+	for _, bm := range ValueTypeBenchmarks {
 		b.Run(bm.name, func(count int) func(*testing.B) {
 			return func(b *testing.B) {
+				// setup
+				colony := NewValueTypeColony()
+				newValueType := new(ValueType)
+
+				b.ReportAllocs()
+				b.ResetTimer()
+
 				for i := 0; i < b.N; i++ {
 					for j := 0; j < count; j++ {
-						newT = colony.Insert(newT)
+						newValueType = colony.Insert(newValueType)
+					}
+				}
+			}
+		}(bm.count))
+	}
+}
+
+func BenchmarkValueTypeSlice(b *testing.B) {
+	for _, bm := range ValueTypeBenchmarks {
+		b.Run(bm.name, func(count int) func(*testing.B) {
+			return func(b *testing.B) {
+				// setup
+				var arr []ValueType
+				newValueType := new(ValueType)
+
+				b.ReportAllocs()
+				b.ResetTimer()
+
+				for i := 0; i < b.N; i++ {
+					for j := 0; j < count; j++ {
+						arr = append(arr, *newValueType)
 					}
 				}
 			}

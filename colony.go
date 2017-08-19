@@ -1,3 +1,4 @@
+//go:generate genny -in=colony.go -out=builtins.go gen "ValueType=BUILTINS"
 package colony
 
 import (
@@ -7,26 +8,26 @@ import (
 	"unsafe"
 )
 
-type Type generic.Type
+type ValueType generic.Type
 
-type TypeColony struct {
-	entry *colonyGroupType
+type ValueTypeColony struct {
+	entry *colonyGroupValueType
 }
 
-// NewTypeColony returns a new colony of Type's.
-func NewTypeColony() *TypeColony {
-	return &TypeColony{
-		entry: newTypeGroup(nil),
+// NewValueTypeColony returns a new colony of ValueValueType's.
+func NewValueTypeColony() *ValueTypeColony {
+	return &ValueTypeColony{
+		entry: newValueTypeGroup(nil),
 	}
 }
 
-// Iterate sends pointers to all instances of Type in the colony to the given channel.
-func (c *TypeColony) Iterate() <-chan *Type {
-	ch := make(chan *Type)
+// Iterate sends pointers to all instances of ValueValueType in the colony to the given channel.
+func (c *ValueTypeColony) Iterate() <-chan *ValueType {
+	ch := make(chan *ValueType)
 	var wg sync.WaitGroup
 	for g := c.entry; g != nil; g = g.next {
 		wg.Add(1)
-		go func(g *colonyGroupType) {
+		go func(g *colonyGroupValueType) {
 			g.l.RLock()
 			for i, e := g.index.NextSet(0); e; i, e = g.index.NextSet(i + 1) {
 				ch <- &g.data[i]
@@ -42,22 +43,22 @@ func (c *TypeColony) Iterate() <-chan *Type {
 	return ch
 }
 
-func (c *TypeColony) Insert(t *Type) (tp *Type) {
+func (c *ValueTypeColony) Insert(t *ValueType) (tp *ValueType) {
 	return c.entry.Insert(t)
 }
 
-func (c *TypeColony) Delete(tp *Type) {
+func (c *ValueTypeColony) Delete(tp *ValueType) {
 	c.entry.Delete(tp)
 }
 
-func newTypeGroup(previous *colonyGroupType) *colonyGroupType {
-	var g colonyGroupType
+func newValueTypeGroup(previous *colonyGroupValueType) *colonyGroupValueType {
+	var g colonyGroupValueType
 	if previous != nil {
-		g.data = make([]Type, len(previous.data)*2)
+		g.data = make([]ValueType, len(previous.data)*2)
 		g.index = bitset.New(uint(len(previous.data) * 2))
 	} else {
-		g.data = make([]Type, 2)
-		g.index = bitset.New(2)
+		g.data = make([]ValueType, 8)
+		g.index = bitset.New(8)
 	}
 	g.next = nil
 	g.l = &sync.RWMutex{}
@@ -66,18 +67,18 @@ func newTypeGroup(previous *colonyGroupType) *colonyGroupType {
 	return &g
 }
 
-type colonyGroupType struct {
-	data     []Type
+type colonyGroupValueType struct {
+	data     []ValueType
 	index    *bitset.BitSet
 	maxPtr   uintptr
 	minPtr   uintptr
-	next     *colonyGroupType
-	previous *colonyGroupType
+	next     *colonyGroupValueType
+	previous *colonyGroupValueType
 
 	l *sync.RWMutex
 }
 
-func (g *colonyGroupType) Insert(t *Type) (tp *Type) {
+func (g *colonyGroupValueType) Insert(t *ValueType) (tp *ValueType) {
 	g.l.Lock()
 	if i, e := g.index.NextClear(0); e {
 		g.data[i] = *t
@@ -87,13 +88,13 @@ func (g *colonyGroupType) Insert(t *Type) (tp *Type) {
 		return
 	}
 	if g.next == nil {
-		g.next = newTypeGroup(g)
+		g.next = newValueTypeGroup(g)
 	}
 	g.l.Unlock()
 	return g.next.Insert(t)
 }
 
-func (g *colonyGroupType) Delete(tp *Type) {
+func (g *colonyGroupValueType) Delete(tp *ValueType) {
 	if uintptr(unsafe.Pointer(tp)) > g.maxPtr { // hack to determine if a pointer points to this array
 		g.next.Delete(tp)
 	}
