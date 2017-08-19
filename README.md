@@ -1,5 +1,5 @@
 # go-colony
-PLF::Colony in Go (with type safety)
+[PLF::Colony](http://plflib.org/colony.htm) in Go (with type safety and code generation)
 
 ## Usage
 
