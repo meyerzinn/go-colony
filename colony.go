@@ -20,31 +20,6 @@ func NewValueTypeColony(size uint) *ValueTypeColony {
 	}
 }
 
-//// Iterate sends pointers to all instances of ValueType in the colony to the given channel.
-//func (c *ValueTypeColony) Iterate() <-chan *ValueType {
-//	ch := make(chan *ValueType)
-//	var wg sync.WaitGroup
-//	for g := c.entry; g != nil; g = g.next {
-//		wg.Add(1)
-//		go func(g *colonyGroupValueType) {
-//			g.l.RLock()
-//			//for i, e := g.index.NextSet(0); e; i, e = g.index.NextSet(i + 1) {
-//			//	ch <- &g.data[i]
-//			//}
-//			for _, f := range g.free {
-//
-//			}
-//			g.l.RUnlock()
-//			wg.Done()
-//		}(g)
-//	}
-//	go func() {
-//		wg.Wait()
-//		close(ch)
-//	}()
-//	return ch
-//}
-
 func (c *ValueTypeColony) Insert(t *ValueType) (tp *ValueType) {
 	return c.entry.Insert(t)
 }
@@ -92,13 +67,6 @@ func (g *colonyGroupValueType) Insert(t *ValueType) (tp *ValueType) {
 		}
 		return g.next.Insert(t)
 	}
-	//if i, e := g.index.NextClear(0); e {
-	//	g.data[i] = *t
-	//	g.index.Set(i)
-	//	tp = &g.data[i]
-	//	g.l.Unlock()
-	//	return
-	//}
 }
 
 func (g *colonyGroupValueType) Delete(tp *ValueType) {

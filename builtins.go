@@ -20,31 +20,6 @@ func NewBoolColony(size uint) *BoolColony {
 	}
 }
 
-//// Iterate sends pointers to all instances of bool in the colony to the given channel.
-//func (c *BoolColony) Iterate() <-chan *bool {
-// ch := make(chan *bool)
-//	var wg sync.WaitGroup
-//	for g := c.entry; g != nil; g = g.next {
-//		wg.Add(1)
-// go func(g *colonyGroupbool) {
-//			g.l.RLock()
-//			//for i, e := g.index.NextSet(0); e; i, e = g.index.NextSet(i + 1) {
-//			//	ch <- &g.data[i]
-//			//}
-//			for _, f := range g.free {
-//
-//			}
-//			g.l.RUnlock()
-//			wg.Done()
-//		}(g)
-//	}
-//	go func() {
-//		wg.Wait()
-//		close(ch)
-//	}()
-//	return ch
-//}
-
 func (c *BoolColony) Insert(t *bool) (tp *bool) {
 	return c.entry.Insert(t)
 }
@@ -92,13 +67,6 @@ func (g *colonyGroupbool) Insert(t *bool) (tp *bool) {
 		}
 		return g.next.Insert(t)
 	}
-	//if i, e := g.index.NextClear(0); e {
-	//	g.data[i] = *t
-	//	g.index.Set(i)
-	//	tp = &g.data[i]
-	//	g.l.Unlock()
-	//	return
-	//}
 }
 
 func (g *colonyGroupbool) Delete(tp *bool) {
@@ -123,31 +91,6 @@ func NewByteColony(size uint) *ByteColony {
 		entry: newbyteGroup(nil, size),
 	}
 }
-
-//// Iterate sends pointers to all instances of byte in the colony to the given channel.
-//func (c *ByteColony) Iterate() <-chan *byte {
-// ch := make(chan *byte)
-//	var wg sync.WaitGroup
-//	for g := c.entry; g != nil; g = g.next {
-//		wg.Add(1)
-// go func(g *colonyGroupbyte) {
-//			g.l.RLock()
-//			//for i, e := g.index.NextSet(0); e; i, e = g.index.NextSet(i + 1) {
-//			//	ch <- &g.data[i]
-//			//}
-//			for _, f := range g.free {
-//
-//			}
-//			g.l.RUnlock()
-//			wg.Done()
-//		}(g)
-//	}
-//	go func() {
-//		wg.Wait()
-//		close(ch)
-//	}()
-//	return ch
-//}
 
 func (c *ByteColony) Insert(t *byte) (tp *byte) {
 	return c.entry.Insert(t)
@@ -196,13 +139,6 @@ func (g *colonyGroupbyte) Insert(t *byte) (tp *byte) {
 		}
 		return g.next.Insert(t)
 	}
-	//if i, e := g.index.NextClear(0); e {
-	//	g.data[i] = *t
-	//	g.index.Set(i)
-	//	tp = &g.data[i]
-	//	g.l.Unlock()
-	//	return
-	//}
 }
 
 func (g *colonyGroupbyte) Delete(tp *byte) {
@@ -227,31 +163,6 @@ func NewComplex128Colony(size uint) *Complex128Colony {
 		entry: newcomplex128Group(nil, size),
 	}
 }
-
-//// Iterate sends pointers to all instances of complex128 in the colony to the given channel.
-//func (c *Complex128Colony) Iterate() <-chan *complex128 {
-// ch := make(chan *complex128)
-//	var wg sync.WaitGroup
-//	for g := c.entry; g != nil; g = g.next {
-//		wg.Add(1)
-// go func(g *colonyGroupcomplex128) {
-//			g.l.RLock()
-//			//for i, e := g.index.NextSet(0); e; i, e = g.index.NextSet(i + 1) {
-//			//	ch <- &g.data[i]
-//			//}
-//			for _, f := range g.free {
-//
-//			}
-//			g.l.RUnlock()
-//			wg.Done()
-//		}(g)
-//	}
-//	go func() {
-//		wg.Wait()
-//		close(ch)
-//	}()
-//	return ch
-//}
 
 func (c *Complex128Colony) Insert(t *complex128) (tp *complex128) {
 	return c.entry.Insert(t)
@@ -300,13 +211,6 @@ func (g *colonyGroupcomplex128) Insert(t *complex128) (tp *complex128) {
 		}
 		return g.next.Insert(t)
 	}
-	//if i, e := g.index.NextClear(0); e {
-	//	g.data[i] = *t
-	//	g.index.Set(i)
-	//	tp = &g.data[i]
-	//	g.l.Unlock()
-	//	return
-	//}
 }
 
 func (g *colonyGroupcomplex128) Delete(tp *complex128) {
@@ -331,31 +235,6 @@ func NewComplex64Colony(size uint) *Complex64Colony {
 		entry: newcomplex64Group(nil, size),
 	}
 }
-
-//// Iterate sends pointers to all instances of complex64 in the colony to the given channel.
-//func (c *Complex64Colony) Iterate() <-chan *complex64 {
-// ch := make(chan *complex64)
-//	var wg sync.WaitGroup
-//	for g := c.entry; g != nil; g = g.next {
-//		wg.Add(1)
-// go func(g *colonyGroupcomplex64) {
-//			g.l.RLock()
-//			//for i, e := g.index.NextSet(0); e; i, e = g.index.NextSet(i + 1) {
-//			//	ch <- &g.data[i]
-//			//}
-//			for _, f := range g.free {
-//
-//			}
-//			g.l.RUnlock()
-//			wg.Done()
-//		}(g)
-//	}
-//	go func() {
-//		wg.Wait()
-//		close(ch)
-//	}()
-//	return ch
-//}
 
 func (c *Complex64Colony) Insert(t *complex64) (tp *complex64) {
 	return c.entry.Insert(t)
@@ -404,13 +283,6 @@ func (g *colonyGroupcomplex64) Insert(t *complex64) (tp *complex64) {
 		}
 		return g.next.Insert(t)
 	}
-	//if i, e := g.index.NextClear(0); e {
-	//	g.data[i] = *t
-	//	g.index.Set(i)
-	//	tp = &g.data[i]
-	//	g.l.Unlock()
-	//	return
-	//}
 }
 
 func (g *colonyGroupcomplex64) Delete(tp *complex64) {
@@ -435,31 +307,6 @@ func NewErrorColony(size uint) *ErrorColony {
 		entry: newerrorGroup(nil, size),
 	}
 }
-
-//// Iterate sends pointers to all instances of error in the colony to the given channel.
-//func (c *ErrorColony) Iterate() <-chan *error {
-// ch := make(chan *error)
-//	var wg sync.WaitGroup
-//	for g := c.entry; g != nil; g = g.next {
-//		wg.Add(1)
-// go func(g *colonyGrouperror) {
-//			g.l.RLock()
-//			//for i, e := g.index.NextSet(0); e; i, e = g.index.NextSet(i + 1) {
-//			//	ch <- &g.data[i]
-//			//}
-//			for _, f := range g.free {
-//
-//			}
-//			g.l.RUnlock()
-//			wg.Done()
-//		}(g)
-//	}
-//	go func() {
-//		wg.Wait()
-//		close(ch)
-//	}()
-//	return ch
-//}
 
 func (c *ErrorColony) Insert(t *error) (tp *error) {
 	return c.entry.Insert(t)
@@ -508,13 +355,6 @@ func (g *colonyGrouperror) Insert(t *error) (tp *error) {
 		}
 		return g.next.Insert(t)
 	}
-	//if i, e := g.index.NextClear(0); e {
-	//	g.data[i] = *t
-	//	g.index.Set(i)
-	//	tp = &g.data[i]
-	//	g.l.Unlock()
-	//	return
-	//}
 }
 
 func (g *colonyGrouperror) Delete(tp *error) {
@@ -539,31 +379,6 @@ func NewFloat32Colony(size uint) *Float32Colony {
 		entry: newfloat32Group(nil, size),
 	}
 }
-
-//// Iterate sends pointers to all instances of float32 in the colony to the given channel.
-//func (c *Float32Colony) Iterate() <-chan *float32 {
-// ch := make(chan *float32)
-//	var wg sync.WaitGroup
-//	for g := c.entry; g != nil; g = g.next {
-//		wg.Add(1)
-// go func(g *colonyGroupfloat32) {
-//			g.l.RLock()
-//			//for i, e := g.index.NextSet(0); e; i, e = g.index.NextSet(i + 1) {
-//			//	ch <- &g.data[i]
-//			//}
-//			for _, f := range g.free {
-//
-//			}
-//			g.l.RUnlock()
-//			wg.Done()
-//		}(g)
-//	}
-//	go func() {
-//		wg.Wait()
-//		close(ch)
-//	}()
-//	return ch
-//}
 
 func (c *Float32Colony) Insert(t *float32) (tp *float32) {
 	return c.entry.Insert(t)
@@ -612,13 +427,6 @@ func (g *colonyGroupfloat32) Insert(t *float32) (tp *float32) {
 		}
 		return g.next.Insert(t)
 	}
-	//if i, e := g.index.NextClear(0); e {
-	//	g.data[i] = *t
-	//	g.index.Set(i)
-	//	tp = &g.data[i]
-	//	g.l.Unlock()
-	//	return
-	//}
 }
 
 func (g *colonyGroupfloat32) Delete(tp *float32) {
@@ -643,31 +451,6 @@ func NewFloat64Colony(size uint) *Float64Colony {
 		entry: newfloat64Group(nil, size),
 	}
 }
-
-//// Iterate sends pointers to all instances of float64 in the colony to the given channel.
-//func (c *Float64Colony) Iterate() <-chan *float64 {
-// ch := make(chan *float64)
-//	var wg sync.WaitGroup
-//	for g := c.entry; g != nil; g = g.next {
-//		wg.Add(1)
-// go func(g *colonyGroupfloat64) {
-//			g.l.RLock()
-//			//for i, e := g.index.NextSet(0); e; i, e = g.index.NextSet(i + 1) {
-//			//	ch <- &g.data[i]
-//			//}
-//			for _, f := range g.free {
-//
-//			}
-//			g.l.RUnlock()
-//			wg.Done()
-//		}(g)
-//	}
-//	go func() {
-//		wg.Wait()
-//		close(ch)
-//	}()
-//	return ch
-//}
 
 func (c *Float64Colony) Insert(t *float64) (tp *float64) {
 	return c.entry.Insert(t)
@@ -716,13 +499,6 @@ func (g *colonyGroupfloat64) Insert(t *float64) (tp *float64) {
 		}
 		return g.next.Insert(t)
 	}
-	//if i, e := g.index.NextClear(0); e {
-	//	g.data[i] = *t
-	//	g.index.Set(i)
-	//	tp = &g.data[i]
-	//	g.l.Unlock()
-	//	return
-	//}
 }
 
 func (g *colonyGroupfloat64) Delete(tp *float64) {
@@ -747,31 +523,6 @@ func NewIntColony(size uint) *IntColony {
 		entry: newintGroup(nil, size),
 	}
 }
-
-//// Iterate sends pointers to all instances of int in the colony to the given channel.
-//func (c *IntColony) Iterate() <-chan *int {
-// ch := make(chan *int)
-//	var wg sync.WaitGroup
-//	for g := c.entry; g != nil; g = g.next {
-//		wg.Add(1)
-// go func(g *colonyGroupint) {
-//			g.l.RLock()
-//			//for i, e := g.index.NextSet(0); e; i, e = g.index.NextSet(i + 1) {
-//			//	ch <- &g.data[i]
-//			//}
-//			for _, f := range g.free {
-//
-//			}
-//			g.l.RUnlock()
-//			wg.Done()
-//		}(g)
-//	}
-//	go func() {
-//		wg.Wait()
-//		close(ch)
-//	}()
-//	return ch
-//}
 
 func (c *IntColony) Insert(t *int) (tp *int) {
 	return c.entry.Insert(t)
@@ -820,13 +571,6 @@ func (g *colonyGroupint) Insert(t *int) (tp *int) {
 		}
 		return g.next.Insert(t)
 	}
-	//if i, e := g.index.NextClear(0); e {
-	//	g.data[i] = *t
-	//	g.index.Set(i)
-	//	tp = &g.data[i]
-	//	g.l.Unlock()
-	//	return
-	//}
 }
 
 func (g *colonyGroupint) Delete(tp *int) {
@@ -851,31 +595,6 @@ func NewInt16Colony(size uint) *Int16Colony {
 		entry: newint16Group(nil, size),
 	}
 }
-
-//// Iterate sends pointers to all instances of int16 in the colony to the given channel.
-//func (c *Int16Colony) Iterate() <-chan *int16 {
-// ch := make(chan *int16)
-//	var wg sync.WaitGroup
-//	for g := c.entry; g != nil; g = g.next {
-//		wg.Add(1)
-// go func(g *colonyGroupint16) {
-//			g.l.RLock()
-//			//for i, e := g.index.NextSet(0); e; i, e = g.index.NextSet(i + 1) {
-//			//	ch <- &g.data[i]
-//			//}
-//			for _, f := range g.free {
-//
-//			}
-//			g.l.RUnlock()
-//			wg.Done()
-//		}(g)
-//	}
-//	go func() {
-//		wg.Wait()
-//		close(ch)
-//	}()
-//	return ch
-//}
 
 func (c *Int16Colony) Insert(t *int16) (tp *int16) {
 	return c.entry.Insert(t)
@@ -924,13 +643,6 @@ func (g *colonyGroupint16) Insert(t *int16) (tp *int16) {
 		}
 		return g.next.Insert(t)
 	}
-	//if i, e := g.index.NextClear(0); e {
-	//	g.data[i] = *t
-	//	g.index.Set(i)
-	//	tp = &g.data[i]
-	//	g.l.Unlock()
-	//	return
-	//}
 }
 
 func (g *colonyGroupint16) Delete(tp *int16) {
@@ -955,31 +667,6 @@ func NewInt32Colony(size uint) *Int32Colony {
 		entry: newint32Group(nil, size),
 	}
 }
-
-//// Iterate sends pointers to all instances of int32 in the colony to the given channel.
-//func (c *Int32Colony) Iterate() <-chan *int32 {
-// ch := make(chan *int32)
-//	var wg sync.WaitGroup
-//	for g := c.entry; g != nil; g = g.next {
-//		wg.Add(1)
-// go func(g *colonyGroupint32) {
-//			g.l.RLock()
-//			//for i, e := g.index.NextSet(0); e; i, e = g.index.NextSet(i + 1) {
-//			//	ch <- &g.data[i]
-//			//}
-//			for _, f := range g.free {
-//
-//			}
-//			g.l.RUnlock()
-//			wg.Done()
-//		}(g)
-//	}
-//	go func() {
-//		wg.Wait()
-//		close(ch)
-//	}()
-//	return ch
-//}
 
 func (c *Int32Colony) Insert(t *int32) (tp *int32) {
 	return c.entry.Insert(t)
@@ -1028,13 +715,6 @@ func (g *colonyGroupint32) Insert(t *int32) (tp *int32) {
 		}
 		return g.next.Insert(t)
 	}
-	//if i, e := g.index.NextClear(0); e {
-	//	g.data[i] = *t
-	//	g.index.Set(i)
-	//	tp = &g.data[i]
-	//	g.l.Unlock()
-	//	return
-	//}
 }
 
 func (g *colonyGroupint32) Delete(tp *int32) {
@@ -1059,31 +739,6 @@ func NewInt64Colony(size uint) *Int64Colony {
 		entry: newint64Group(nil, size),
 	}
 }
-
-//// Iterate sends pointers to all instances of int64 in the colony to the given channel.
-//func (c *Int64Colony) Iterate() <-chan *int64 {
-// ch := make(chan *int64)
-//	var wg sync.WaitGroup
-//	for g := c.entry; g != nil; g = g.next {
-//		wg.Add(1)
-// go func(g *colonyGroupint64) {
-//			g.l.RLock()
-//			//for i, e := g.index.NextSet(0); e; i, e = g.index.NextSet(i + 1) {
-//			//	ch <- &g.data[i]
-//			//}
-//			for _, f := range g.free {
-//
-//			}
-//			g.l.RUnlock()
-//			wg.Done()
-//		}(g)
-//	}
-//	go func() {
-//		wg.Wait()
-//		close(ch)
-//	}()
-//	return ch
-//}
 
 func (c *Int64Colony) Insert(t *int64) (tp *int64) {
 	return c.entry.Insert(t)
@@ -1132,13 +787,6 @@ func (g *colonyGroupint64) Insert(t *int64) (tp *int64) {
 		}
 		return g.next.Insert(t)
 	}
-	//if i, e := g.index.NextClear(0); e {
-	//	g.data[i] = *t
-	//	g.index.Set(i)
-	//	tp = &g.data[i]
-	//	g.l.Unlock()
-	//	return
-	//}
 }
 
 func (g *colonyGroupint64) Delete(tp *int64) {
@@ -1163,31 +811,6 @@ func NewInt8Colony(size uint) *Int8Colony {
 		entry: newint8Group(nil, size),
 	}
 }
-
-//// Iterate sends pointers to all instances of int8 in the colony to the given channel.
-//func (c *Int8Colony) Iterate() <-chan *int8 {
-// ch := make(chan *int8)
-//	var wg sync.WaitGroup
-//	for g := c.entry; g != nil; g = g.next {
-//		wg.Add(1)
-// go func(g *colonyGroupint8) {
-//			g.l.RLock()
-//			//for i, e := g.index.NextSet(0); e; i, e = g.index.NextSet(i + 1) {
-//			//	ch <- &g.data[i]
-//			//}
-//			for _, f := range g.free {
-//
-//			}
-//			g.l.RUnlock()
-//			wg.Done()
-//		}(g)
-//	}
-//	go func() {
-//		wg.Wait()
-//		close(ch)
-//	}()
-//	return ch
-//}
 
 func (c *Int8Colony) Insert(t *int8) (tp *int8) {
 	return c.entry.Insert(t)
@@ -1236,13 +859,6 @@ func (g *colonyGroupint8) Insert(t *int8) (tp *int8) {
 		}
 		return g.next.Insert(t)
 	}
-	//if i, e := g.index.NextClear(0); e {
-	//	g.data[i] = *t
-	//	g.index.Set(i)
-	//	tp = &g.data[i]
-	//	g.l.Unlock()
-	//	return
-	//}
 }
 
 func (g *colonyGroupint8) Delete(tp *int8) {
@@ -1267,31 +883,6 @@ func NewRuneColony(size uint) *RuneColony {
 		entry: newruneGroup(nil, size),
 	}
 }
-
-//// Iterate sends pointers to all instances of rune in the colony to the given channel.
-//func (c *RuneColony) Iterate() <-chan *rune {
-// ch := make(chan *rune)
-//	var wg sync.WaitGroup
-//	for g := c.entry; g != nil; g = g.next {
-//		wg.Add(1)
-// go func(g *colonyGrouprune) {
-//			g.l.RLock()
-//			//for i, e := g.index.NextSet(0); e; i, e = g.index.NextSet(i + 1) {
-//			//	ch <- &g.data[i]
-//			//}
-//			for _, f := range g.free {
-//
-//			}
-//			g.l.RUnlock()
-//			wg.Done()
-//		}(g)
-//	}
-//	go func() {
-//		wg.Wait()
-//		close(ch)
-//	}()
-//	return ch
-//}
 
 func (c *RuneColony) Insert(t *rune) (tp *rune) {
 	return c.entry.Insert(t)
@@ -1340,13 +931,6 @@ func (g *colonyGrouprune) Insert(t *rune) (tp *rune) {
 		}
 		return g.next.Insert(t)
 	}
-	//if i, e := g.index.NextClear(0); e {
-	//	g.data[i] = *t
-	//	g.index.Set(i)
-	//	tp = &g.data[i]
-	//	g.l.Unlock()
-	//	return
-	//}
 }
 
 func (g *colonyGrouprune) Delete(tp *rune) {
@@ -1371,31 +955,6 @@ func NewStringColony(size uint) *StringColony {
 		entry: newstringGroup(nil, size),
 	}
 }
-
-//// Iterate sends pointers to all instances of string in the colony to the given channel.
-//func (c *StringColony) Iterate() <-chan *string {
-// ch := make(chan *string)
-//	var wg sync.WaitGroup
-//	for g := c.entry; g != nil; g = g.next {
-//		wg.Add(1)
-// go func(g *colonyGroupstring) {
-//			g.l.RLock()
-//			//for i, e := g.index.NextSet(0); e; i, e = g.index.NextSet(i + 1) {
-//			//	ch <- &g.data[i]
-//			//}
-//			for _, f := range g.free {
-//
-//			}
-//			g.l.RUnlock()
-//			wg.Done()
-//		}(g)
-//	}
-//	go func() {
-//		wg.Wait()
-//		close(ch)
-//	}()
-//	return ch
-//}
 
 func (c *StringColony) Insert(t *string) (tp *string) {
 	return c.entry.Insert(t)
@@ -1444,13 +1003,6 @@ func (g *colonyGroupstring) Insert(t *string) (tp *string) {
 		}
 		return g.next.Insert(t)
 	}
-	//if i, e := g.index.NextClear(0); e {
-	//	g.data[i] = *t
-	//	g.index.Set(i)
-	//	tp = &g.data[i]
-	//	g.l.Unlock()
-	//	return
-	//}
 }
 
 func (g *colonyGroupstring) Delete(tp *string) {
@@ -1475,31 +1027,6 @@ func NewUintColony(size uint) *UintColony {
 		entry: newuintGroup(nil, size),
 	}
 }
-
-//// Iterate sends pointers to all instances of uint in the colony to the given channel.
-//func (c *UintColony) Iterate() <-chan *uint {
-// ch := make(chan *uint)
-//	var wg sync.WaitGroup
-//	for g := c.entry; g != nil; g = g.next {
-//		wg.Add(1)
-// go func(g *colonyGroupuint) {
-//			g.l.RLock()
-//			//for i, e := g.index.NextSet(0); e; i, e = g.index.NextSet(i + 1) {
-//			//	ch <- &g.data[i]
-//			//}
-//			for _, f := range g.free {
-//
-//			}
-//			g.l.RUnlock()
-//			wg.Done()
-//		}(g)
-//	}
-//	go func() {
-//		wg.Wait()
-//		close(ch)
-//	}()
-//	return ch
-//}
 
 func (c *UintColony) Insert(t *uint) (tp *uint) {
 	return c.entry.Insert(t)
@@ -1548,13 +1075,6 @@ func (g *colonyGroupuint) Insert(t *uint) (tp *uint) {
 		}
 		return g.next.Insert(t)
 	}
-	//if i, e := g.index.NextClear(0); e {
-	//	g.data[i] = *t
-	//	g.index.Set(i)
-	//	tp = &g.data[i]
-	//	g.l.Unlock()
-	//	return
-	//}
 }
 
 func (g *colonyGroupuint) Delete(tp *uint) {
@@ -1579,31 +1099,6 @@ func NewUint16Colony(size uint) *Uint16Colony {
 		entry: newuint16Group(nil, size),
 	}
 }
-
-//// Iterate sends pointers to all instances of uint16 in the colony to the given channel.
-//func (c *Uint16Colony) Iterate() <-chan *uint16 {
-// ch := make(chan *uint16)
-//	var wg sync.WaitGroup
-//	for g := c.entry; g != nil; g = g.next {
-//		wg.Add(1)
-// go func(g *colonyGroupuint16) {
-//			g.l.RLock()
-//			//for i, e := g.index.NextSet(0); e; i, e = g.index.NextSet(i + 1) {
-//			//	ch <- &g.data[i]
-//			//}
-//			for _, f := range g.free {
-//
-//			}
-//			g.l.RUnlock()
-//			wg.Done()
-//		}(g)
-//	}
-//	go func() {
-//		wg.Wait()
-//		close(ch)
-//	}()
-//	return ch
-//}
 
 func (c *Uint16Colony) Insert(t *uint16) (tp *uint16) {
 	return c.entry.Insert(t)
@@ -1652,13 +1147,6 @@ func (g *colonyGroupuint16) Insert(t *uint16) (tp *uint16) {
 		}
 		return g.next.Insert(t)
 	}
-	//if i, e := g.index.NextClear(0); e {
-	//	g.data[i] = *t
-	//	g.index.Set(i)
-	//	tp = &g.data[i]
-	//	g.l.Unlock()
-	//	return
-	//}
 }
 
 func (g *colonyGroupuint16) Delete(tp *uint16) {
@@ -1683,31 +1171,6 @@ func NewUint32Colony(size uint) *Uint32Colony {
 		entry: newuint32Group(nil, size),
 	}
 }
-
-//// Iterate sends pointers to all instances of uint32 in the colony to the given channel.
-//func (c *Uint32Colony) Iterate() <-chan *uint32 {
-// ch := make(chan *uint32)
-//	var wg sync.WaitGroup
-//	for g := c.entry; g != nil; g = g.next {
-//		wg.Add(1)
-// go func(g *colonyGroupuint32) {
-//			g.l.RLock()
-//			//for i, e := g.index.NextSet(0); e; i, e = g.index.NextSet(i + 1) {
-//			//	ch <- &g.data[i]
-//			//}
-//			for _, f := range g.free {
-//
-//			}
-//			g.l.RUnlock()
-//			wg.Done()
-//		}(g)
-//	}
-//	go func() {
-//		wg.Wait()
-//		close(ch)
-//	}()
-//	return ch
-//}
 
 func (c *Uint32Colony) Insert(t *uint32) (tp *uint32) {
 	return c.entry.Insert(t)
@@ -1756,13 +1219,6 @@ func (g *colonyGroupuint32) Insert(t *uint32) (tp *uint32) {
 		}
 		return g.next.Insert(t)
 	}
-	//if i, e := g.index.NextClear(0); e {
-	//	g.data[i] = *t
-	//	g.index.Set(i)
-	//	tp = &g.data[i]
-	//	g.l.Unlock()
-	//	return
-	//}
 }
 
 func (g *colonyGroupuint32) Delete(tp *uint32) {
@@ -1787,31 +1243,6 @@ func NewUint64Colony(size uint) *Uint64Colony {
 		entry: newuint64Group(nil, size),
 	}
 }
-
-//// Iterate sends pointers to all instances of uint64 in the colony to the given channel.
-//func (c *Uint64Colony) Iterate() <-chan *uint64 {
-// ch := make(chan *uint64)
-//	var wg sync.WaitGroup
-//	for g := c.entry; g != nil; g = g.next {
-//		wg.Add(1)
-// go func(g *colonyGroupuint64) {
-//			g.l.RLock()
-//			//for i, e := g.index.NextSet(0); e; i, e = g.index.NextSet(i + 1) {
-//			//	ch <- &g.data[i]
-//			//}
-//			for _, f := range g.free {
-//
-//			}
-//			g.l.RUnlock()
-//			wg.Done()
-//		}(g)
-//	}
-//	go func() {
-//		wg.Wait()
-//		close(ch)
-//	}()
-//	return ch
-//}
 
 func (c *Uint64Colony) Insert(t *uint64) (tp *uint64) {
 	return c.entry.Insert(t)
@@ -1860,13 +1291,6 @@ func (g *colonyGroupuint64) Insert(t *uint64) (tp *uint64) {
 		}
 		return g.next.Insert(t)
 	}
-	//if i, e := g.index.NextClear(0); e {
-	//	g.data[i] = *t
-	//	g.index.Set(i)
-	//	tp = &g.data[i]
-	//	g.l.Unlock()
-	//	return
-	//}
 }
 
 func (g *colonyGroupuint64) Delete(tp *uint64) {
@@ -1891,31 +1315,6 @@ func NewUint8Colony(size uint) *Uint8Colony {
 		entry: newuint8Group(nil, size),
 	}
 }
-
-//// Iterate sends pointers to all instances of uint8 in the colony to the given channel.
-//func (c *Uint8Colony) Iterate() <-chan *uint8 {
-// ch := make(chan *uint8)
-//	var wg sync.WaitGroup
-//	for g := c.entry; g != nil; g = g.next {
-//		wg.Add(1)
-// go func(g *colonyGroupuint8) {
-//			g.l.RLock()
-//			//for i, e := g.index.NextSet(0); e; i, e = g.index.NextSet(i + 1) {
-//			//	ch <- &g.data[i]
-//			//}
-//			for _, f := range g.free {
-//
-//			}
-//			g.l.RUnlock()
-//			wg.Done()
-//		}(g)
-//	}
-//	go func() {
-//		wg.Wait()
-//		close(ch)
-//	}()
-//	return ch
-//}
 
 func (c *Uint8Colony) Insert(t *uint8) (tp *uint8) {
 	return c.entry.Insert(t)
@@ -1964,13 +1363,6 @@ func (g *colonyGroupuint8) Insert(t *uint8) (tp *uint8) {
 		}
 		return g.next.Insert(t)
 	}
-	//if i, e := g.index.NextClear(0); e {
-	//	g.data[i] = *t
-	//	g.index.Set(i)
-	//	tp = &g.data[i]
-	//	g.l.Unlock()
-	//	return
-	//}
 }
 
 func (g *colonyGroupuint8) Delete(tp *uint8) {
@@ -1995,31 +1387,6 @@ func NewUintptrColony(size uint) *UintptrColony {
 		entry: newuintptrGroup(nil, size),
 	}
 }
-
-//// Iterate sends pointers to all instances of uintptr in the colony to the given channel.
-//func (c *UintptrColony) Iterate() <-chan *uintptr {
-// ch := make(chan *uintptr)
-//	var wg sync.WaitGroup
-//	for g := c.entry; g != nil; g = g.next {
-//		wg.Add(1)
-// go func(g *colonyGroupuintptr) {
-//			g.l.RLock()
-//			//for i, e := g.index.NextSet(0); e; i, e = g.index.NextSet(i + 1) {
-//			//	ch <- &g.data[i]
-//			//}
-//			for _, f := range g.free {
-//
-//			}
-//			g.l.RUnlock()
-//			wg.Done()
-//		}(g)
-//	}
-//	go func() {
-//		wg.Wait()
-//		close(ch)
-//	}()
-//	return ch
-//}
 
 func (c *UintptrColony) Insert(t *uintptr) (tp *uintptr) {
 	return c.entry.Insert(t)
@@ -2068,13 +1435,6 @@ func (g *colonyGroupuintptr) Insert(t *uintptr) (tp *uintptr) {
 		}
 		return g.next.Insert(t)
 	}
-	//if i, e := g.index.NextClear(0); e {
-	//	g.data[i] = *t
-	//	g.index.Set(i)
-	//	tp = &g.data[i]
-	//	g.l.Unlock()
-	//	return
-	//}
 }
 
 func (g *colonyGroupuintptr) Delete(tp *uintptr) {
